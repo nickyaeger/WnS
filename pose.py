@@ -3,6 +3,12 @@
 import mediapipe as mp
 import cv2 as cv
 
+# Use GStreamer pipeline for libcamera
+pipeline = (
+    "libcamerasrc ! video/x-raw, width=640, height=480, framerate=30/1 ! "
+    "videoconvert ! appsink"
+)
+
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
