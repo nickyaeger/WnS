@@ -20,7 +20,7 @@ while True:
     frame = picam2.capture_array()
 
     # Rotate the frame 90 degrees clockwise
-    frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+    frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
     # Convert the frame to RGB for MediaPipe
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
