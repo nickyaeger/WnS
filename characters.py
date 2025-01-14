@@ -93,127 +93,128 @@ def display_text(text: str, colon: int, leds: list) -> None:
             for j in range(21):
                 strip.setPixelColor((i+1)*j, BLACK)
             continue
-        match chars[i]:
-            case 'A':
-                for j in A:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'B':
-                for j in B:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'C':
-                for j in C:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'D':
-                for j in D:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'E':
-                for j in E:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'F':
-                for j in F:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'G':
-                for j in G:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'H':
-                for j in H:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'I':
-                for j in I:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'J':
-                for j in J:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'K':
-                for j in K:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'L':
-                for j in L:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'M':
-                for j in M:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'N':
-                for j in N:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'O':
-                for j in O:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'P':
-                for j in P:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'Q':
-                for j in Q:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'R':
-                for j in R:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'S':
-                for j in S:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'T':
-                for j in T:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'U':
-                for j in U:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'V':
-                for j in V:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'W':
-                for j in W:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'X':
-                for j in X:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'Y':
-                for j in Y:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case 'Z':
-                for j in Z:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '0':
-                for j in ZERO:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '1':
-                for j in ONE:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '2':
-                for j in TWO:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '3':
-                for j in THREE:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '4':
-                for j in FOUR:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '5':
-                for j in FIVE:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '6':
-                for j in SIX:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '7':
-                for j in SEVEN:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '8':
-                for j in EIGHT:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '9':
-                for j in NINE:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '+':
-                for j in PLUS:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '-':
-                for j in MINUS:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '*':
-                for j in TIMES:
-                    strip.setPixelColor((i+1)*j, WHITE)
-            case '/':
-                for j in DIVIDE:
-                    strip.setPixelColor((i+1)*j, WHITE)
+        
+        if chars[i] == 'A':
+            for j in A:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'B':
+            for j in B:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'C':
+            for j in C:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'D':
+            for j in D:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'E':
+            for j in E:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'F':
+            for j in F:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'G':
+            for j in G:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'H':
+            for j in H:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'I':
+            for j in I:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'J':
+            for j in J:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'K':
+            for j in K:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'L':
+            for j in L:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'M':
+            for j in M:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'N':
+            for j in N:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'O':
+            for j in O:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'P':
+            for j in P:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'Q':
+            for j in Q:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'R':
+            for j in R:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'S':
+            for j in S:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'T':
+            for j in T:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'U':
+            for j in U:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'V':
+            for j in V:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'W':
+            for j in W:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'X':
+            for j in X:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'Y':
+            for j in Y:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == 'Z':
+            for j in Z:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '0':
+            for j in ZERO:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '1':
+            for j in ONE:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '2':
+            for j in TWO:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '3':
+            for j in THREE:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '4':
+            for j in FOUR:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '5':
+            for j in FIVE:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '6':
+            for j in SIX:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '7':
+            for j in SEVEN:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '8':
+            for j in EIGHT:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '9':
+            for j in NINE:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '+':
+            for j in PLUS:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '-':
+            for j in MINUS:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '*':
+            for j in TIMES:
+                strip.setPixelColor((i+1)*j, WHITE)
+        elif chars[i] == '/':
+            for j in DIVIDE:
+                strip.setPixelColor((i+1)*j, WHITE)
+
     if colon == 0:
         strip.setPixelColor(88, BLACK)
         strip.setPixelColor(89, BLACK)
