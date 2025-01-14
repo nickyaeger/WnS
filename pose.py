@@ -1,45 +1,48 @@
 "Pose detection using OpenCV and MediaPipe Pose"
 
+from picamera2 import Picamera2
+import cv2
 import mediapipe as mp
-import cv2 as cv
 
-# Use GStreamer pipeline for libcamera
-pipeline = (
-    "libcamerasrc ! video/x-raw, width=640, height=480, framerate=30/1 ! "
-    "videoconvert ! appsink"
-)
-
+# Initialize MediaPipe Pose
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
 
-cap = cv.VideoCapture(0)
-
-cap.set(cv.CAP_PROP_FRAME_WIDTH, 640)
-cap.set(cv.CAP_PROP_FRAME_HEIGHT, 480)
-
-if not cap.isOpened():
-    print("Cannot open camera. Exiting...")
-    exit()
+# Initialize the Pi Camera
+picam2 = Picamera2()
+config = picam2.create_preview_configuration(main={"size": (640, 480)})
+picam2.configure(config)
+picam2.start()
 
 while True:
-    ret, frame = cap.read()
+    # Capture a frame
+    frame = picam2.capture_array()
 
-    if not ret:
-        print("Can't receive frame. Exiting...")
+    # Rotate the frame 90 degrees clockwise
+    frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
+
+    # Convert the frame to RGB for MediaPipe
+    rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    results = pose.process(rgb_frame)
+
+    # Convert back to BGR for OpenCV display
+    frame = cv2.cvtColor(rgb_frame, cv2.COLOR_RGB2BGR)
+
+    # Debug: Print frame shape
+    print(f"Frame shape: {frame.shape}")
+
+    # Draw landmarks if detected
+    if results.pose_landmarks:
+        mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
+
+    # Display the rotated frame
+    cv2.imshow("Pose Detection", frame)
+
+    # Break the loop on 'q' key press
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-    image = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
-    result = pose.process(image)
-    image = cv.cvtColor(image, cv.COLOR_RGB2BGR) # Convert back for display
-    if result.pose_landmarks:
-        mp_drawing.draw_landmarks(frame, result.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-
-    cv.imshow('Pose Detection', frame) # Remove cv.imshow and frame rendering to improve performance
-
-    if cv.waitKey(50) == ord('q'):
-        break
-    
-cv.destroyAllWindows()
-pose.close()
-cap.release()
+# Stop the camera and clean up
+picam2.stop()
+cv2.destroyAllWindows()
