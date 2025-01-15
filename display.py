@@ -1,5 +1,4 @@
 import rpi_ws281x as ws # type: ignore
-from clock import Clock
 
 # LED configuration
 LED_COUNT = 90
