@@ -1,7 +1,7 @@
 import time
 import threading
 from datetime import datetime
-from games import jumping_jack, memory_game, whackamole, math_game
+from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake
 from display import display_text
 
 # Define states
@@ -89,6 +89,8 @@ def run_game(game_name):
         whackamole.start_game()
     elif game_name == "math_game":
         math_game.start_game()
+    elif game_name == "wake_n_shake":
+        wake_n_shake.start_game()
     else:
         print(f"Unknown game: {game_name}")
 
