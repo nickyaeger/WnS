@@ -5,13 +5,14 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
+picam2 = Picamera2()
+
 def start_game():
     print("Starting Jumping Jack Game...")
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()
     mp_drawing = mp.solutions.drawing_utils
 
-    picam2 = Picamera2()
     config = picam2.create_preview_configuration(main={"size": (854, 480)})
     picam2.configure(config)
     picam2.start()
@@ -72,5 +73,5 @@ def start_game():
 
 def stop_game():
     print("Stopping Jumping Jack Game...")
-    picam2.stop() #type: ignore
+    picam2.stop()
     cv2.destroyAllWindows()
