@@ -36,19 +36,19 @@ def direction_to_pin(direction):
 def read_button_press():
     if GPIO.input(22):
     # if keyboard.is_pressed('a'):
-        print("Left button pressed")
+        # print("Left button pressed")
         return "left"
     elif GPIO.input(24):
     # elif keyboard.is_pressed('w'):
-        print("Up button pressed")
+        # print("Up button pressed")
         return "up"
     elif GPIO.input(26):
     # elif keyboard.is_pressed('d'):
-        print("Right button pressed")
+        # print("Right button pressed")
         return "right"
     elif GPIO.input(28):
     # elif keyboard.is_pressed('s'):
-        print("Down button pressed")
+        # print("Down button pressed")
         return "down"
     else:
         return None
@@ -72,12 +72,12 @@ def start_game():
                 pressed = read_button_press()
                 if pressed:
                     if pressed == sequence[num_pressed]:
-                        print("Correct direction " + str(i))
+                        print("Correct direction " + sequence[num_pressed])
                         num_pressed += 1
                         while read_button_press():
                             continue
                     else:
-                        print("Incorrect direction " + str(i))
+                        print("Incorrect direction " + sequence[num_pressed])
                         success = False
                         while read_button_press():
                             continue
