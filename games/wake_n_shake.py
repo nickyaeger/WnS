@@ -1,5 +1,20 @@
 # pip install pyserial
 # pip install adafruit-circuitpython-bno08x-rvc
+# sudo apt-get install python-rpi.gpio python3-rpi.gpio
+
+import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
+GPIO.setwarnings(False) # Ignore warning for now
+GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
+
+GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # left press
+GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # up press
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # right press
+GPIO.setup(28, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # down press
+
+GPIO.setup(11, GPIO.OUT) # left LED
+GPIO.setup(13, GPIO.OUT) # up LED
+GPIO.setup(15, GPIO.OUT) # right LED
+GPIO.setup(29, GPIO.OUT) # down LED
 
 import random, time
 
