@@ -97,5 +97,3 @@ def start_game():
 def stop_game():
     print("Stopping Memory Game...")
     pass
-
-start_game()
