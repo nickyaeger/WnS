@@ -22,21 +22,16 @@ def generate_sequence(length=5):
 
 def direction_to_pin(direction):
     if direction == "left":
-        print("memorize left")
         return 11
     elif direction == "up":
-        print("memorize up")
         return 13
     elif direction == "right":
-        print("memorize right")
         return 15
     elif direction == "down":
-        print("memorize down")
         return 29
     else:
         print("Invalid direction")
         return None
-    
 
 def read_button_press():
     if GPIO.input(22):

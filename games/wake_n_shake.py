@@ -28,6 +28,19 @@ def generate_sequence(length=10):
     directions = ["up", "down", "left", "right"]
     return [random.choice(directions) for _ in range(length)]
 
+def direction_to_pin(direction):
+    if direction == "left":
+        return 11
+    elif direction == "up":
+        return 13
+    elif direction == "right":
+        return 15
+    elif direction == "down":
+        return 29
+    else:
+        print("Invalid direction")
+        return None
+
 def read_imu_direction(threshold=50):
     yaw, pitch, roll, x_accel, y_accel, z_accel = rvc.heading
     if pitch < -threshold:
@@ -43,11 +56,15 @@ def read_imu_direction(threshold=50):
 
 def start_game(time_limit=1):
     print("Starting Wake'n'Shake Game...")
-    # TODO: tell user to prepare for wake'n'shake
     sequence = generate_sequence()
     while True:
         for direction in sequence:
-            # TODO: light up appropriate button
+            pin = direction_to_pin(direction)
+            GPIO.output(pin, GPIO.HIGH)
+            time.sleep(0.5)
+            GPIO.output(pin, GPIO.LOW)
+            time.sleep(0.5)
+
             start_time = time.time()
             while time.time() - start_time <= time_limit:
                 detected_direction = read_imu_direction()
