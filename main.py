@@ -45,7 +45,6 @@ def handle_button_input():
         buttons.light_up_led(button)  # Light up the corresponding LED
     
     # Button handling logic
-    button = get_button_input()
     if button == "left":  # Navigate left
         if current_state == IDLE:
             print("Setting alarm...")
