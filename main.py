@@ -2,7 +2,7 @@ import time
 import threading
 from datetime import datetime, timedelta
 from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake, pushup
-from display import display_text
+from display_7_seg import display_text
 from buttons import Buttons
 import settings
 

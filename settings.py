@@ -1,5 +1,5 @@
 """Contains the functions that are used to edit the time, alarm, and game settings."""
-from display import display_text
+from display_7_seg import display_text
 
 time = 0000
 alarm = 0000
