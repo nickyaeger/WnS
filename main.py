@@ -69,6 +69,14 @@ def handle_button_input():
         if current_state == IDLE:
             print("Setting game...")
             current_state = GAME_SET
+        elif current_state == ALARM_SET_HOUR:
+            settings.increment_alarm_hour()
+        elif current_state == ALARM_SET_MINUTE:
+            settings.increment_alarm_minute()
+        elif current_state == TIME_SET_HOUR:
+            settings.increment_time_hour()
+        elif current_state == TIME_SET_MINUTE:
+            settings.increment_time_minute()
     elif button == "right":  # Navigate right
         if current_state == IDLE:
             print("Setting time...")
@@ -92,6 +100,14 @@ def handle_button_input():
     elif button == "down":  # Decrement
         if current_state == IDLE:
             pass
+        elif current_state == ALARM_SET_HOUR:
+            settings.decrement_alarm_hour()
+        elif current_state == ALARM_SET_MINUTE:
+            settings.decrement_alarm_minute()
+        elif current_state == TIME_SET_HOUR:
+            settings.decrement_time_hour()
+        elif current_state == TIME_SET_MINUTE:
+            settings.decrement_time_minute()
     elif button == "center":  # Confirm/Select
         if current_state == IDLE:
             pass
@@ -138,13 +154,13 @@ def main_loop():
         elif current_state == ALARM_SET_HOUR:
             display_text(str(settings.alarm)[0] + str(settings.alarm)[1] + "  ", colon=1, colors=[(255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)])
         elif current_state == ALARM_SET_MINUTE:
-            display_text("  " + str(settings.alarm)[3] + str(settings.alarm)[4], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
+            display_text("  " + str(settings.alarm)[2] + str(settings.alarm)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
         elif current_state == GAME_SET:
             display_text(settings.games[settings.index][0])
         elif current_state == TIME_SET_HOUR:
             display_text(str(settings.time)[0] + str(settings.time)[1] + "  ", colon=1, colors=[(0, 0, 255), (0, 0, 255), (0, 0, 0), (0, 0, 0)])
         elif current_state == TIME_SET_MINUTE:
-            display_text("  " + str(settings.time)[3] + str(settings.time)[4], colon=1, colors=[(0, 0, 0), (0, 0, 0), (0, 0, 255), (0, 0, 255)])
+            display_text("  " + str(settings.time)[2] + str(settings.time)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (0, 0, 255), (0, 0, 255)])
         elif current_state == ALARM:
             # Trigger alarm
             for i in range(3):
