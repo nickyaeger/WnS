@@ -12,37 +12,43 @@ def display_text(
         raise ValueError("Text must be 4 characters long")
 
     print(f"Input Text: {text}")
-    print(f"Colon State: {colon} (0: Off, 1: On, 2: Unchanged)")
-    print(f"LED States: {leds} (0: Off, 1: On, 2: Unchanged)")
-    print(f"Character Colors: {colors}")
+    # print(f"Colon State: {colon} (0: Off, 1: On, 2: Unchanged)")
+    # print(f"LED States: {leds} (0: Off, 1: On, 2: Unchanged)")
+    # print(f"Character Colors: {colors}")
     
     chars = list(text)
     for i in range(4):
         if chars[i] not in characters:
             raise ValueError(f"Invalid character: {chars[i]}")
         if chars[i] == '_':
-            print(f"Character {i + 1}: Unchanged")
+            # print(f"Character {i + 1}: Unchanged")
             continue
         if chars[i] == ' ':
-            print(f"Character {i + 1}: Turned off")
+            # print(f"Character {i + 1}: Turned off")
             continue
 
-        print(f"Character {i + 1}: {chars[i]}, Color: {colors[i]}")
+        # print(f"Character {i + 1}: {chars[i]}, Color: {colors[i]}")
 
     if colon == 0:
-        print("Colon: Turned off")
+        # print("Colon: Turned off")
+        pass
     elif colon == 1:
-        print("Colon: Turned on")
+        # print("Colon: Turned on")
+        pass
     elif colon == 2:
-        print("Colon: Unchanged")
+        # print("Colon: Unchanged")
+        pass
 
     for i, led in enumerate(leds):
         if led == 0:
-            print(f"LED {i + 1}: Turned off")
+            # print(f"LED {i + 1}: Turned off")
+            pass
         elif led == 1:
-            print(f"LED {i + 1}: Turned on")
+            # print(f"LED {i + 1}: Turned on")
+            pass
         elif led == 2:
-            print(f"LED {i + 1}: Unchanged")
+            # print(f"LED {i + 1}: Unchanged")
+            pass
 
     print("Simulated LED strip update complete.")
 

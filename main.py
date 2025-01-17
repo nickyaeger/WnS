@@ -58,7 +58,7 @@ def handle_button_input():
             current_state = ALARM_SET_HOUR  # Switch to hour setting
         elif current_state == GAME_SET:
             print("Editing game...")
-            selected_game = settings.edit_game_left(selected_game)  # Cycle left through game options
+            selected_game = settings.edit_game_left()  # Cycle left through game options
         elif current_state == TIME_SET_HOUR:
             print("Setting time minute...")
             current_state = TIME_SET_MINUTE  # Switch to minute setting
@@ -82,7 +82,7 @@ def handle_button_input():
             current_state = ALARM_SET_HOUR  # Switch to hour setting
         elif current_state == GAME_SET:
             print("Editing game...")
-            selected_game = settings.edit_game_right(selected_game)  # Cycle right through game options
+            selected_game = settings.edit_game_right()  # Cycle right through game options
         elif current_state == TIME_SET_HOUR:
             print("Setting time minute...")
             current_state = TIME_SET_MINUTE  # Switch to minute setting
