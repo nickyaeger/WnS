@@ -2,37 +2,37 @@ import RPi.GPIO as GPIO
 import time
 
 # GPIO setup
-GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
+GPIO.setmode(GPIO.BOARD)  # Use Broadcom pin numbering
 
 # Button pins
-left_button = 24
-up_button = 8
-right_button = 7
-down_button = 12
-center_button = 16
-demo_button = 26
+left_button = 18
+up_button = 22
+right_button = 24
+down_button = 26
+# center_button = 16
+# demo_button = 26
 
 # LED pins
-left_led = 2
-up_led = 3
-right_led = 17
-down_led = 27
-center_led = 6
+left_led = 3
+up_led = 5
+right_led = 11
+down_led = 13
+# center_led = 6
 
 # Set up buttons as inputs with pull-up resistors
 GPIO.setup(left_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(up_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(right_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(down_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(center_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(demo_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# GPIO.setup(center_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+# GPIO.setup(demo_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Set up LEDs as outputs
 GPIO.setup(left_led, GPIO.OUT)
 GPIO.setup(up_led, GPIO.OUT)
 GPIO.setup(right_led, GPIO.OUT)
 GPIO.setup(down_led, GPIO.OUT)
-GPIO.setup(center_led, GPIO.OUT)
+# GPIO.setup(center_led, GPIO.OUT)
 
 def get_button_input():
     # Check each button and control corresponding LED
@@ -60,14 +60,14 @@ def get_button_input():
     else:
         GPIO.output(down_led, GPIO.LOW)
 
-    if not GPIO.input(center_button):
-        print("center")
-        GPIO.output(center_led, GPIO.HIGH)
-    else:
-        GPIO.output(center_led, GPIO.LOW)
-
-    if not GPIO.input(demo_button):
-        print("demo")
+#    if not GPIO.input(center_button):
+#        print("center")
+#        GPIO.output(center_led, GPIO.HIGH)
+#    else:
+#        GPIO.output(center_led, GPIO.LOW)
+#
+#    if not GPIO.input(demo_button):
+#        print("demo")
 
 try:
     while True:
