@@ -5,10 +5,9 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
-picam2 = Picamera2()
-
 def start_game():
     print("Starting Jumping Jack Game...")
+    picam2 = Picamera2()
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()
     mp_drawing = mp.solutions.drawing_utils
@@ -23,8 +22,9 @@ def start_game():
     while True:
          # Exit game on 'q' key press or 5 jumping jacks
         if cv2.waitKey(1) & 0xFF == ord('q') or jumping_jack_count >= 5:
-            stop_game()
-            break
+            print("Stopping Jumping Jack Game...")
+            picam2.stop()
+            cv2.destroyAllWindows()
         
         frame = picam2.capture_array()
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
@@ -70,8 +70,4 @@ def start_game():
         cv2.putText(frame, f"Jumping Jacks: {jumping_jack_count}", (10, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.imshow("Jumping Jack Detection", frame)
-
-def stop_game():
-    print("Stopping Jumping Jack Game...")
-    picam2.stop()
-    cv2.destroyAllWindows()
+    
