@@ -3,6 +3,7 @@
 from picamera2 import Picamera2
 import cv2
 import mediapipe as mp
+import numpy as np
 
 def start_game():
     print("Starting Pushup Game...")
@@ -14,10 +15,10 @@ def start_game():
     config = picam2.create_preview_configuration(main={"size": (854, 480)})
     picam2.configure(config)
     picam2.start()
-    
+
     pushup_count = 0
-    prev_state = None  # To track "up" or "down" state
-    
+    direction = 0
+    feedback = "Fix Form"
     while True:
         # Break the loop on 'q' key press or 10 pushups
         if cv2.waitKey(1) & 0xFF == ord('q') or pushup_count >= 5:
@@ -28,45 +29,83 @@ def start_game():
 
         frame = picam2.capture_array()
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    
+
         # Convert the frame to RGB for MediaPipe
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = pose.process(rgb_frame)
-    
+
         # Convert back to BGR for OpenCV display
         frame = cv2.cvtColor(rgb_frame, cv2.COLOR_RGB2BGR)
-    
+
         if results.pose_landmarks:
             landmarks = results.pose_landmarks.landmark
-            # Get relevant landmark positions
-            shoulders_y = (landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER].y +
-                           landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER].y) / 2
-            elbows_y = (landmarks[mp_pose.PoseLandmark.LEFT_ELBOW].y +
-                        landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW].y) / 2
-            knees_y = (landmarks[mp_pose.PoseLandmark.LEFT_KNEE].y +
-                       landmarks[mp_pose.PoseLandmark.RIGHT_KNEE].y) / 2
-            hips_y = (landmarks[mp_pose.PoseLandmark.LEFT_HIP].y +
-                      landmarks[mp_pose.PoseLandmark.RIGHT_HIP].y) / 2
-            # Ensure knees are not on the ground (hips must be higher than knees)
-            knees_off_ground = hips_y < knees_y - 0.1  # Adjust threshold as needed
-            # Push-up "down" condition: elbows close to or below shoulders' Y level
-            is_down = elbows_y > shoulders_y + 0.05 and knees_off_ground
-            # Push-up "up" condition: elbows far above shoulders' Y level
-            is_up = elbows_y < shoulders_y - 0.05 and knees_off_ground
-            # State transition for counting push-ups
-            if prev_state is not None and prev_state != (is_up, is_down):
-                if is_down and not is_up:  # Transition to "down"
-                    prev_state = (is_up, is_down)
-                elif is_up and not is_down:  # Transition to "up"
-                    pushup_count += 1
-                    print(f"Push-ups: {pushup_count}")
-                    prev_state = (is_up, is_down)
-            else:
-                prev_state = (is_up, is_down)
 
+            # Get relevant landmark positions
+            elbow_angle = calculate_angle(landmarks, mp_pose.PoseLandmark.LEFT_SHOULDER, mp_pose.PoseLandmark.LEFT_ELBOW, mp_pose.PoseLandmark.LEFT_WRIST)
+            shoulder_angle = calculate_angle(landmarks, mp_pose.PoseLandmark.LEFT_ELBOW, mp_pose.PoseLandmark.LEFT_SHOULDER, mp_pose.PoseLandmark.LEFT_HIP)
+            hip_angle = calculate_angle(landmarks, mp_pose.PoseLandmark.LEFT_SHOULDER, mp_pose.PoseLandmark.LEFT_HIP, mp_pose.PoseLandmark.LEFT_KNEE)
+
+            # Percentage of success for the pushup
+            per = np.interp(elbow_angle, (90, 160), (0, 100))
+
+            # Bar to show pushup progress
+            bar = np.interp(elbow_angle, (90, 160), (380, 50))
+
+            # Check to ensure the correct form before starting
+            if elbow_angle > 160 and shoulder_angle > 40 and hip_angle > 160:
+                feedback = "Good Form"
+            else:
+                feedback = "Fix Form"
+
+            # Check for full range of motion for the pushup
+            if feedback == "Good Form":
+                if per == 0:
+                    if elbow_angle <= 90 and hip_angle > 160:
+                        feedback = "Up"
+                        if direction == 0:
+                            pushup_count += 0.5
+                            direction = 1
+                    else:
+                        feedback = "Fix Form"
+
+                if per == 100:
+                    if elbow_angle > 160 and shoulder_angle > 40 and hip_angle > 160:
+                        feedback = "Down"
+                        if direction == 1:
+                            pushup_count += 0.5
+                            direction = 0
+                    else:
+                        feedback = "Fix Form"
+
+            # Draw Bar
+            cv2.rectangle(frame, (580, 50), (600, 380), (0, 255, 0), 3)
+            cv2.rectangle(frame, (580, int(bar)), (600, 380), (0, 255, 0), cv2.FILLED)
+            cv2.putText(frame, f'{int(per)}%', (565, 430), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
+
+            # Pushup Counter
+            cv2.rectangle(frame, (0, 380), (100, 480), (0, 255, 0), cv2.FILLED)
+            cv2.putText(frame, str(int(pushup_count)), (25, 455), cv2.FONT_HERSHEY_PLAIN, 5, (255, 0, 0), 5)
+
+            # Feedback
+            cv2.rectangle(frame, (500, 0), (640, 40), (255, 255, 255), cv2.FILLED)
+            cv2.putText(frame, feedback, (500, 40), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
+
+            # Draw landmarks and connections
             mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
-    
-        cv2.putText(frame, f"Push-ups: {pushup_count}", (10, 50),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+
         cv2.imshow("Push-up Detection", frame)
+
+
+def calculate_angle(landmarks, p1, p2, p3):
+    x1, y1 = landmarks[p1].x, landmarks[p1].y
+    x2, y2 = landmarks[p2].x, landmarks[p2].y
+    x3, y3 = landmarks[p3].x, landmarks[p3].y
+
+    angle = np.degrees(np.arctan2(y3 - y2, x3 - x2) - np.arctan2(y1 - y2, x1 - x2))
+    if angle < 0:
+        angle += 360
+    if angle > 180:
+        angle = 360 - angle
+
+    return angle
     
