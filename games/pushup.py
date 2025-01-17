@@ -39,13 +39,20 @@ def start_game():
         if results.pose_landmarks:
             landmarks = results.pose_landmarks.landmark
             # Get relevant landmark positions
-            nose_y = landmarks[mp_pose.PoseLandmark.NOSE].y
             shoulders_y = (landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER].y +
                            landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER].y) / 2
-            # Push-up "down" condition: nose close to shoulder level
-            is_down = nose_y > shoulders_y + 0.05  # Adjust threshold as needed
-            # Push-up "up" condition: nose far above shoulder level
-            is_up = nose_y < shoulders_y - 0.05  # Adjust threshold as needed
+            elbows_y = (landmarks[mp_pose.PoseLandmark.LEFT_ELBOW].y +
+                        landmarks[mp_pose.PoseLandmark.RIGHT_ELBOW].y) / 2
+            knees_y = (landmarks[mp_pose.PoseLandmark.LEFT_KNEE].y +
+                       landmarks[mp_pose.PoseLandmark.RIGHT_KNEE].y) / 2
+            hips_y = (landmarks[mp_pose.PoseLandmark.LEFT_HIP].y +
+                      landmarks[mp_pose.PoseLandmark.RIGHT_HIP].y) / 2
+            # Ensure knees are not on the ground (hips must be higher than knees)
+            knees_off_ground = hips_y < knees_y - 0.1  # Adjust threshold as needed
+            # Push-up "down" condition: elbows close to or below shoulders' Y level
+            is_down = elbows_y > shoulders_y + 0.05 and knees_off_ground
+            # Push-up "up" condition: elbows far above shoulders' Y level
+            is_up = elbows_y < shoulders_y - 0.05 and knees_off_ground
             # State transition for counting push-ups
             if prev_state is not None and prev_state != (is_up, is_down):
                 if is_down and not is_up:  # Transition to "down"
