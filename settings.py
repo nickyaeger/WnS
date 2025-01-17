@@ -10,7 +10,8 @@ def increment_alarm_hour():
     global alarm
     if alarm >= 2300:
         alarm -= 2300
-    alarm += 100
+    else:
+        alarm += 100
     print("Alarm: ", alarm)
 
 def increment_alarm_minute():
@@ -18,14 +19,16 @@ def increment_alarm_minute():
     if alarm % 100 == 59:
         alarm -= 59
         increment_alarm_hour()
-    alarm += 1
+    else:
+        alarm += 1
     print("Alarm: ", alarm)
 
 def decrement_alarm_hour():
     global alarm
     if alarm <= 100:
         alarm += 2300
-    alarm -= 100
+    else:
+        alarm -= 100
     print("Alarm: ", alarm)
 
 def decrement_alarm_minute():
@@ -33,7 +36,8 @@ def decrement_alarm_minute():
     if alarm % 100 == 0:
         alarm += 59
         decrement_alarm_hour()
-    alarm -= 1
+    else:
+        alarm -= 1
     print("Alarm: ", alarm)
 
 def edit_game_left():
@@ -54,7 +58,8 @@ def increment_time_hour():
     global time
     if time >= 2300:
         time -= 2300
-    time += 100
+    else:
+        time += 100
     print("Time: ", time)
 
 def increment_time_minute():
@@ -62,14 +67,16 @@ def increment_time_minute():
     if time % 100 == 59:
         time -= 59
         increment_time_hour()
-    time += 1
+    else:
+        time += 1
     print("Time: ", time)
 
 def decrement_time_hour():
     global time
     if time < 100:
         time += 2300
-    time -= 100
+    else:
+        time -= 100
     print("Time: ", time)
 
 def decrement_time_minute():
@@ -77,5 +84,7 @@ def decrement_time_minute():
     if time % 100 == 0:
         time += 59
         decrement_time_hour()
+    else:
+        time -= 1
     print("Time: ", time)
     
