@@ -1,17 +1,70 @@
-from gpiozero import Button, LED
+import RPi.GPIO as GPIO
 import time
 
-# Button objects
-left_button = gpiozero.Button(17)
-up_button = gpiozero.Button(27)
-right_button = gpiozero.Button(22)
-down_button = gpiozero.Button(5)
-center_button = gpiozero.Button(6)
-demo_button = gpiozero.Button(26)
+class Buttons:
+    def __init__(self):
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setwarnings(False)
 
-# LED objects
-left_led = gpiozero.LED(25)
-up_led = gpiozero.LED(8)
-right_led = gpiozero.LED(7)
-down_led = gpiozero.LED(1)
-center_led = gpiozero.LED(12)
+        # Button pins
+        self.button_pins = {
+            "left": 18,
+            "up": 22,
+            "right": 24,
+            "down": 26,
+            "center": 16,
+            "demo": 26,
+        }
+
+        # LED pins
+        self.led_pins = {
+            "left": 3,
+            "up": 5,
+            "right": 11,
+            "down": 13,
+            "center": 6,
+        }
+
+        # Set up buttons as inputs with pull-down resistors
+        for pin in self.button_pins.values():
+            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+        # Set up LEDs as outputs
+        for pin in self.led_pins.values():
+            GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin, GPIO.LOW)
+
+    def get_pressed_button(self):
+        """Check if any button is pressed and return its name."""
+        for name, pin in self.button_pins.items():
+            if GPIO.input(pin) == GPIO.HIGH:
+                return name
+        return None
+
+    def light_up_led(self, button_name):
+        """Light up the LED corresponding to the button."""
+        if button_name in self.led_pins:
+            GPIO.output(self.led_pins[button_name], GPIO.HIGH)
+            time.sleep(0.2)
+            GPIO.output(self.led_pins[button_name], GPIO.LOW)
+
+    def cleanup(self):
+        """Clean up GPIO pins."""
+        GPIO.cleanup()
+
+
+# Instantiate the Buttons class for standalone testing
+if __name__ == "__main__":
+    buttons = Buttons()
+    try:
+        print("Press buttons to test. Press Ctrl+C to exit.")
+        while True:
+            button = buttons.get_pressed_button()
+            if button:
+                print(f"{button} button pressed")
+                buttons.light_up_led(button)
+            time.sleep(0.1)
+    except KeyboardInterrupt:
+        print("Exiting program...")
+    finally:
+        buttons.cleanup()

@@ -3,7 +3,7 @@ import threading
 from datetime import datetime, timedelta
 from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake, pushup
 from display import display_text
-from buttons import left, up, right, down, center, demo
+from buttons import Buttons
 import settings
 
 # Define states
@@ -23,6 +23,7 @@ alarm_time = "0700"
 selected_game = "jumping_jack"
 current_time = datetime.now()  # Internal time starts with the current system time
 time_lock = threading.Lock()  # To safely update the time across threads
+buttons = Buttons()
 
 
 # Function to increment internal time
@@ -39,6 +40,10 @@ def increment_internal_time():
 def handle_button_input():
     global current_state, selected_game, alarm_time
 
+    button = buttons.get_pressed_button()  # Get the pressed button
+    if button:
+        buttons.light_up_led(button)  # Light up the corresponding LED
+    
     # Button handling logic
     button = get_button_input()
     if button == "left":  # Navigate left
@@ -228,4 +233,7 @@ if __name__ == "__main__":
     clock_thread.start()
 
     # Run the main state machine loop
-    main_loop()
+    try:
+        main_loop()
+    finally:
+        buttons.cleanup()  # Clean up GPIO pins
