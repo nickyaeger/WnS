@@ -1,8 +1,8 @@
 """Contains the functions that are used to edit the time, alarm, and game settings."""
 from display_7_seg import display_text
 
-time = 0000
-alarm = 0000
+time = 0
+alarm = 0
 games = [["JUMP", "jumping_jack"],[ "MEMY", "memory_game"], ["MOLE", "whackamole"], ["MATH", "math_game"], ["SHAK", "wake_n_shake"], ["PUSH", "pushup"]]
 index = 0
 

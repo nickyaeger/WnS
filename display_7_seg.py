@@ -8,7 +8,7 @@ def display_text(
     colors: list = [(255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255)]
 ) -> None:
     """Simulates displaying the given text on the LED strip by printing inputs and expected operations."""
-    if len(text) != 4:
+    """if len(text) != 4:
         raise ValueError("Text must be 4 characters long")
 
     # print(f"Input Text: {text}")
@@ -50,7 +50,8 @@ def display_text(
             # print(f"LED {i + 1}: Unchanged")
             pass
 
-    # print("Simulated LED strip update complete.")
+    # print("Simulated LED strip update complete.")"""
+    pass
 
 # Example usage
 display_text("TEST", colon=1, leds=[1, 0, 2, 1], colors=[(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)])
