@@ -6,15 +6,15 @@ import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 
-GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # left press
-GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # up press
-GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # right press
-GPIO.setup(28, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # down press
+GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # left press
+GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # up press
+GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # right press
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # down press
 
-GPIO.setup(11, GPIO.OUT) # left LED
-GPIO.setup(13, GPIO.OUT) # up LED
-GPIO.setup(15, GPIO.OUT) # right LED
-GPIO.setup(29, GPIO.OUT) # down LED
+GPIO.setup(3, GPIO.OUT) # left LED
+GPIO.setup(5, GPIO.OUT) # up LED
+GPIO.setup(11, GPIO.OUT) # right LED
+GPIO.setup(13, GPIO.OUT) # down LED
 
 import random, time
 
@@ -30,18 +30,18 @@ def generate_sequence(length=10):
 
 def direction_to_pin(direction):
     if direction == "left":
-        return 11
+        return 3
     elif direction == "up":
-        return 13
+        return 5
     elif direction == "right":
-        return 15
+        return 11
     elif direction == "down":
-        return 29
+        return 13
     else:
         print("Invalid direction")
         return None
 
-def read_imu_direction(threshold=50):
+def read_imu_direction(threshold=30):
     yaw, pitch, roll, x_accel, y_accel, z_accel = rvc.heading
     if pitch < -threshold:
         return "up"
@@ -54,11 +54,16 @@ def read_imu_direction(threshold=50):
     else:
         return None
 
-def start_game(time_limit=1):
+def start_game(time_limit=5):
     print("Starting Wake'n'Shake Game...")
-    sequence = generate_sequence()
     while True:
+        sequence = generate_sequence()
+        GPIO.output(3, GPIO.LOW)
+        GPIO.output(5, GPIO.LOW)
+        GPIO.output(11, GPIO.LOW)
+        GPIO.output(13, GPIO.LOW)
         for direction in sequence:
+            print(direction)
             pin = direction_to_pin(direction)
             GPIO.output(pin, GPIO.HIGH)
             time.sleep(0.5)
@@ -68,12 +73,15 @@ def start_game(time_limit=1):
             start_time = time.time()
             while time.time() - start_time <= time_limit:
                 detected_direction = read_imu_direction()
+                #print(detected_direction)
                 if detected_direction == direction:
                     print(f"{direction.capitalize()} detected!")
+                    time.sleep(1)
                     break
             else:
-                print("Time's up or incorrect movement! Game over.")
+                print("Time's up or incorrect movement! Restarting.")
                 # TODO: wrong buzzer sound, wait one second before restarting
+                time.sleep(3)
                 break
         else:
             print("Congratulations! You completed the sequence!")
@@ -84,7 +92,7 @@ def stop_game():
     print("Stopping Wake'n'Shake Game...")
 
 # test code
-while True:
+#while True:
     yaw, pitch, roll, x_accel, y_accel, z_accel = rvc.heading
 #    print("Yaw: %2.2f Pitch: %2.2f Roll: %2.2f Degrees" % (yaw, pitch, roll))
 #    print("Acceleration X: %2.2f Y: %2.2f Z: %2.2f m/s^2" % (x_accel, y_accel, z_accel))
@@ -96,3 +104,4 @@ while True:
         print("right")
     elif roll < -50:
         print("left")
+        
