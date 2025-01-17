@@ -1,8 +1,8 @@
+"Pushup pose detection using OpenCV and MediaPipe Pose"
+
 from picamera2 import Picamera2
 import cv2
 import mediapipe as mp
-
-game_active = False
 
 def start_game():
     print("Starting Pushup Game...")
@@ -10,8 +10,7 @@ def start_game():
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()
     mp_drawing = mp.solutions.drawing_utils
-    
-    picam2 = Picamera2()
+
     config = picam2.create_preview_configuration(main={"size": (854, 480)})
     picam2.configure(config)
     picam2.start()
@@ -20,7 +19,7 @@ def start_game():
     prev_state = None  # To track "up" or "down" state
     
     while True:
-        # Break the loop on 'q' key press or 5 pushups
+        # Break the loop on 'q' key press or 10 pushups
         if cv2.waitKey(1) & 0xFF == ord('q') or pushup_count >= 5:
             print("Stopping Pushup Game...")
             picam2.stop()

@@ -3,7 +3,6 @@
 from picamera2 import Picamera2
 import cv2
 import mediapipe as mp
-import numpy as np
 
 def start_game():
     print("Starting Jumping Jack Game...")
@@ -20,7 +19,7 @@ def start_game():
     prev_state = None  # To track "up" or "down" state
 
     while True:
-         # Exit game on 'q' key press or 5 jumping jacks
+         # Exit game on 'q' key press or 10 jumping jacks
         if cv2.waitKey(1) & 0xFF == ord('q') or jumping_jack_count >= 5:
             print("Stopping Jumping Jack Game...")
             picam2.stop()
