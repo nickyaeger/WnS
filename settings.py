@@ -42,14 +42,20 @@ def decrement_alarm_minute():
 
 def edit_game_left():
     global index, games
-    index -= 1
+    if index == 0:
+        index = len(games) - 1
+    else:
+        index -= 1
     display_text(games[index][0])
     print("Selected game: ", games[index][1])
     return games[index][1]
 
 def edit_game_right():
     global index, games
-    index += 1
+    if index == len(games) - 1:
+        index = 0
+    else:
+        index += 1
     display_text(games[index][0])
     print("Selected game: ", games[index][1])
     return games[index][1]
