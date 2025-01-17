@@ -2,19 +2,19 @@ from gpiozero import Button, LED
 import time
 
 # Button objects
-left = Button(17)
-up = Button(27)
-right = Button(22)
-down = Button(5)
-center = Button(6)
+left = Button(25)
+up = Button(8)
+right = Button(7)
+down = Button(12)
+center = Button(16)
 demo = Button(26)
 
 # LED objects
-left_led = LED(25)
-up_led = LED(8)
-right_led = LED(7)
-down_led = LED(1)
-center_led = LED(12)
+left_led = LED(17)
+up_led = LED(27)
+right_led = LED(22)
+down_led = LED(5)
+center_led = LED(6)
 
 def get_button_input():
     if left.is_pressed:
