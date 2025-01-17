@@ -25,6 +25,7 @@ def start_game():
             print("Stopping Pushup Game...")
             picam2.stop()
             cv2.destroyAllWindows()
+            exit()
 
         frame = picam2.capture_array()
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
