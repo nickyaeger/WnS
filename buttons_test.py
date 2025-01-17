@@ -20,12 +20,12 @@ down_led = 13
 # center_led = 6
 
 # Set up buttons as inputs with pull-up resistors
-GPIO.setup(left_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(up_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(right_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(down_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-# GPIO.setup(center_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-# GPIO.setup(demo_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(left_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(up_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(right_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(down_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+# GPIO.setup(center_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+# GPIO.setup(demo_button, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Set up LEDs as outputs
 GPIO.setup(left_led, GPIO.OUT)
