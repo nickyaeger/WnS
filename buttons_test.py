@@ -5,7 +5,7 @@ import time
 GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
 
 # Button pins
-left_button = 25
+left_button = 24
 up_button = 8
 right_button = 7
 down_button = 12
@@ -13,10 +13,10 @@ center_button = 16
 demo_button = 26
 
 # LED pins
-left_led = 17
-up_led = 27
-right_led = 22
-down_led = 5
+left_led = 2
+up_led = 3
+right_led = 17
+down_led = 27
 center_led = 6
 
 # Set up buttons as inputs with pull-up resistors
