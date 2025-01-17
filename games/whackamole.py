@@ -16,7 +16,7 @@ GPIO.setup(13, GPIO.OUT) # down LED
 import random, time
 # import keyboard # for testing
 
-def generate_sequence(length=5):
+def generate_sequence(length=10):
     directions = ["up", "down", "left", "right"]
     return [random.choice(directions) for _ in range(length)]
 
@@ -53,7 +53,7 @@ def read_button_press():
     else:
         return None
 
-def start_game(time_limit=3):
+def start_game(time_limit=1):
     print("Starting Whackamole...")
     while True:
         sequence = generate_sequence()
@@ -92,5 +92,3 @@ def start_game(time_limit=3):
 def stop_game():
     print("Stopping Whackamole..")
     pass
-
-start_game()
