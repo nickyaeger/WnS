@@ -38,7 +38,7 @@ def increment_internal_time():
 
 # Function to handle button inputs
 def handle_button_input():
-    global current_state, selected_game, alarm_time
+    global current_state, selected_game, alarm_time, current_time
 
     button = get_button_input(buttons)  # Get the pressed button
     if button:
