@@ -12,7 +12,7 @@ class Buttons:
             "up": 22,
             "right": 24,
             "down": 26,
-            #"center": 16,
+            "center": 36,
             #"demo": 26,
         }
 
@@ -22,7 +22,7 @@ class Buttons:
             "up": 5,
             "right": 11,
             "down": 13,
-            #"center": 6,
+            "center": 31,
         }
 
         # Set up buttons as inputs with pull-down resistors
