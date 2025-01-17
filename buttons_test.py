@@ -1,55 +1,79 @@
-from gpiozero import Button, LED
+import RPi.GPIO as GPIO
 import time
 
-# Button objects
-left = Button(25)
-up = Button(8)
-right = Button(7)
-down = Button(12)
-center = Button(16)
-demo = Button(26)
+# GPIO setup
+GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
 
-# LED objects
-left_led = LED(17)
-up_led = LED(27)
-right_led = LED(22)
-down_led = LED(5)
-center_led = LED(6)
+# Button pins
+left_button = 25
+up_button = 8
+right_button = 7
+down_button = 12
+center_button = 16
+demo_button = 26
+
+# LED pins
+left_led = 17
+up_led = 27
+right_led = 22
+down_led = 5
+center_led = 6
+
+# Set up buttons as inputs with pull-up resistors
+GPIO.setup(left_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(up_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(right_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(down_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(center_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(demo_button, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+# Set up LEDs as outputs
+GPIO.setup(left_led, GPIO.OUT)
+GPIO.setup(up_led, GPIO.OUT)
+GPIO.setup(right_led, GPIO.OUT)
+GPIO.setup(down_led, GPIO.OUT)
+GPIO.setup(center_led, GPIO.OUT)
 
 def get_button_input():
-    if left.is_pressed:
+    # Check each button and control corresponding LED
+    if not GPIO.input(left_button):  # Button is pressed (low signal)
         print("left")
-        left_led.on()
+        GPIO.output(left_led, GPIO.HIGH)  # Turn on LED
     else:
-        left_led.off()
+        GPIO.output(left_led, GPIO.LOW)   # Turn off LED
 
-    if up.is_pressed:
+    if not GPIO.input(up_button):
         print("up")
-        up_led.on()
+        GPIO.output(up_led, GPIO.HIGH)
     else:
-        up_led.off()
+        GPIO.output(up_led, GPIO.LOW)
 
-    if right.is_pressed:
+    if not GPIO.input(right_button):
         print("right")
-        right_led.on()
+        GPIO.output(right_led, GPIO.HIGH)
     else:
-        right_led.off()
+        GPIO.output(right_led, GPIO.LOW)
 
-    if down.is_pressed:
+    if not GPIO.input(down_button):
         print("down")
-        down_led.on()
+        GPIO.output(down_led, GPIO.HIGH)
     else:
-        down_led.off()
+        GPIO.output(down_led, GPIO.LOW)
 
-    if center.is_pressed:
+    if not GPIO.input(center_button):
         print("center")
-        center_led.on()
+        GPIO.output(center_led, GPIO.HIGH)
     else:
-        center_led.off()
+        GPIO.output(center_led, GPIO.LOW)
 
-    if demo.is_pressed:
+    if not GPIO.input(demo_button):
         print("demo")
 
-while True:
-    get_button_input()
-    time.sleep(0.1)
+try:
+    while True:
+        get_button_input()
+        time.sleep(0.1)
+except KeyboardInterrupt:
+    print("Exiting program...")
+finally:
+    GPIO.cleanup()  # Reset GPIO pins to a safe state
