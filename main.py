@@ -40,7 +40,7 @@ def increment_internal_time():
 def handle_button_input():
     global current_state, selected_game, alarm_time
 
-    button = buttons.get_pressed_button()  # Get the pressed button
+    button = get_button_input(buttons)  # Get the pressed button
     if button:
         buttons.light_up_led(button)  # Light up the corresponding LED
     
@@ -125,7 +125,12 @@ def check_alarm():
 # Main state machine loop
 def main_loop():
     global current_state, selected_game
-
+    print("Entering main loop...")
+    print("Welcome to the Wake 'n' Shake Alarm Clock! Press Ctrl+C to exit.")
+    print("The current state is:", current_state)
+    print("The current time is:", current_time.strftime("%H:%M"))
+    print("The current alarm is set to:", alarm_time)
+    print("The selected game is:", selected_game)
     while True:
         if current_state == IDLE:
             # Display current time
@@ -204,22 +209,9 @@ def run_game(game_name):
         print(f"Unknown game: {game_name}")
 
 
-# Getting button input
-def get_button_input():
-    if left.is_pressed:
-        return "left"
-    elif up.is_pressed:
-        return "up"
-    elif right.is_pressed:
-        return "right"
-    elif down.is_pressed:
-        return "down"
-    elif center.is_pressed:
-        return "center"
-    elif demo.is_pressed:
-        return "demo"
-    else:
-        return None
+# Getting button input using the Buttons class
+def get_button_input(buttons):
+    return buttons.get_pressed_button()
 
 
 # Main entry point
@@ -227,13 +219,16 @@ if __name__ == "__main__":
     # Start the alarm checker thread
     alarm_thread = threading.Thread(target=check_alarm, daemon=True)
     alarm_thread.start()
+    print("Alarm checker started...")
 
     # Start the internal clock thread
     clock_thread = threading.Thread(target=increment_internal_time, daemon=True)
     clock_thread.start()
+    print("Internal clock started...")
 
     # Run the main state machine loop
     try:
+        print("Starting main loop...")
         main_loop()
     finally:
         buttons.cleanup()  # Clean up GPIO pins
