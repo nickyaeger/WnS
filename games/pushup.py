@@ -28,6 +28,7 @@ def start_game():
             exit()
 
         frame = picam2.capture_array()
+        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
         # Convert the frame to RGB for MediaPipe
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
