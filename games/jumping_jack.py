@@ -1,6 +1,6 @@
 "Jumping jack pose detection using OpenCV and MediaPipe Pose"
 
-from picamera2 import Picamera2 #type: ignore
+from picamera2 import Picamera2
 import cv2
 import mediapipe as mp
 import numpy as np

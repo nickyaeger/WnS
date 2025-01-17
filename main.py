@@ -1,7 +1,7 @@
 import time
 import threading
 from datetime import datetime, timedelta
-from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake
+from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake, pushup
 from display import display_text
 from buttons import left, up, right, down, center, demo
 import settings
@@ -43,30 +43,47 @@ def handle_button_input():
     button = get_button_input()
     if button == "left":  # Navigate left
         if current_state == IDLE:
+            print("Setting alarm...")
+            settings.alarm = int(alarm_time)
             current_state = ALARM_SET_HOUR
         elif current_state == ALARM_SET_HOUR:
+            print("Setting alarm minute...")
             current_state = ALARM_SET_MINUTE  # Switch to minute setting
         elif current_state == ALARM_SET_MINUTE:
+            print("Setting alarm hour...")
             current_state = ALARM_SET_HOUR  # Switch to hour setting
         elif current_state == GAME_SET:
+            print("Editing game...")
             selected_game = settings.edit_game_left(selected_game)  # Cycle left through game options
         elif current_state == TIME_SET_HOUR:
+            print("Setting time minute...")
             current_state = TIME_SET_MINUTE  # Switch to minute setting
         elif current_state == TIME_SET_MINUTE:
+            print("Setting time hour...")
             current_state = TIME_SET_HOUR  # Switch to hour setting
     elif button == "up":  # Increment
         if current_state == IDLE:
+            print("Setting game...")
             current_state = GAME_SET
     elif button == "right":  # Navigate right
         if current_state == IDLE:
+            print("Setting time...")
+            settings.time = int(current_time.strftime("%H%M"))
             current_state = TIME_SET_HOUR
         elif current_state == ALARM_SET_HOUR:
+            print("Setting alarm minute...")
             current_state = ALARM_SET_MINUTE  # Switch to minute setting
+        elif current_state == ALARM_SET_MINUTE:
+            print("Setting alarm hour...")
+            current_state = ALARM_SET_HOUR  # Switch to hour setting
         elif current_state == GAME_SET:
+            print("Editing game...")
             selected_game = settings.edit_game_right(selected_game)  # Cycle right through game options
         elif current_state == TIME_SET_HOUR:
+            print("Setting time minute...")
             current_state = TIME_SET_MINUTE  # Switch to minute setting
         elif current_state == TIME_SET_MINUTE:
+            print("Setting time hour...")
             current_state = TIME_SET_HOUR  # Switch to hour setting
     elif button == "down":  # Decrement
         if current_state == IDLE:
@@ -75,13 +92,16 @@ def handle_button_input():
         if current_state == IDLE:
             pass
         elif current_state == ALARM_SET_HOUR or current_state == ALARM_SET_MINUTE:
-            current_state = IDLE  # Confirm the current setting
+            alarm_time = str(settings.alarm)  # Confirm the current setting
+            current_state = IDLE
         elif current_state == GAME_SET:
             selected_game = settings.games[settings.index][1]  # Confirm the current setting
             current_state = IDLE
         elif current_state == TIME_SET_HOUR or current_state == TIME_SET_MINUTE:
-            current_state = IDLE  # Confirm the current setting
+            current_time = datetime.strptime(str(settings.time), "%H%M")  # Confirm the current setting
+            current_state = IDLE
     elif button == "demo":  # Start demo
+        print("Demo button pressed...")
         current_state = ALARM
 
 
@@ -107,18 +127,27 @@ def main_loop():
             with time_lock:
                 display_text(current_time.strftime("%H%M"))
         elif current_state == ALARM_SET_HOUR:
-            pass
+            display_text(str(settings.alarm)[0] + str(settings.alarm)[1] + "  ", colon=1, colors=[(255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)])
         elif current_state == ALARM_SET_MINUTE:
-            pass
+            display_text("  " + str(settings.alarm)[3] + str(settings.alarm)[4], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
         elif current_state == GAME_SET:
-            pass
+            display_text(settings.games[settings.index][0])
         elif current_state == TIME_SET_HOUR:
-            pass
+            display_text(str(settings.time)[0] + str(settings.time)[1] + "  ", colon=1, colors=[(0, 0, 255), (0, 0, 255), (0, 0, 0), (0, 0, 0)])
         elif current_state == TIME_SET_MINUTE:
-            pass
+            display_text("  " + str(settings.time)[3] + str(settings.time)[4], colon=1, colors=[(0, 0, 0), (0, 0, 0), (0, 0, 255), (0, 0, 255)])
         elif current_state == ALARM:
             # Trigger alarm
-            display_text("Wake Up!")
+            for i in range(3):
+                display_text("WAKE")
+                time.sleep(0.4)
+                display_text("AKE ")
+                time.sleep(0.4)
+                display_text("KE U")
+                time.sleep(0.4)
+                display_text("E UP")
+                time.sleep(2)
+            display_text("GAME")
             current_state = GAME
         elif current_state == GAME:
             # Run the selected game
@@ -126,7 +155,24 @@ def main_loop():
             current_state = POST_ALARM
         elif current_state == POST_ALARM:
             # Resume idle state after alarm/game
-            display_text("Good Morning!")
+            display_text("GOOD")
+            time.sleep(0.4)
+            display_text("OOD ")
+            time.sleep(0.4)
+            display_text("OD M")
+            time.sleep(0.4)
+            display_text("D MO")
+            time.sleep(0.4)
+            display_text(" MOR")
+            time.sleep(0.4)
+            display_text("MORN")
+            time.sleep(0.4)
+            display_text("ORNI")
+            time.sleep(0.4)
+            display_text("RNIN")
+            time.sleep(0.4)
+            display_text("NING")
+            display_text("    ")
             time.sleep(3)  # Pause for a bit
             current_state = IDLE
 
@@ -147,6 +193,8 @@ def run_game(game_name):
         math_game.start_game()
     elif game_name == "wake_n_shake":
         wake_n_shake.start_game()
+    elif game_name == "pushup":
+        pushup.start_game()
     else:
         print(f"Unknown game: {game_name}")
 
