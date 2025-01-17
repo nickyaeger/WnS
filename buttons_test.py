@@ -36,25 +36,25 @@ GPIO.setup(down_led, GPIO.OUT)
 
 def get_button_input():
     # Check each button and control corresponding LED
-    if not GPIO.input(left_button):  # Button is pressed (low signal)
+    if GPIO.input(left_button):  # Button is pressed (low signal)
         print("left")
         GPIO.output(left_led, GPIO.HIGH)  # Turn on LED
     else:
         GPIO.output(left_led, GPIO.LOW)   # Turn off LED
 
-    if not GPIO.input(up_button):
+    if GPIO.input(up_button):
         print("up")
         GPIO.output(up_led, GPIO.HIGH)
     else:
         GPIO.output(up_led, GPIO.LOW)
 
-    if not GPIO.input(right_button):
+    if GPIO.input(right_button):
         print("right")
         GPIO.output(right_led, GPIO.HIGH)
     else:
         GPIO.output(right_led, GPIO.LOW)
 
-    if not GPIO.input(down_button):
+    if GPIO.input(down_button):
         print("down")
         GPIO.output(down_led, GPIO.HIGH)
     else:
