@@ -132,6 +132,8 @@ def check_alarm():
     while True:
         with time_lock:
             now = current_time.strftime("%H%M")  # Use internal time
+            now_with_seconds = current_time.strftime("%H:%M:%S")
+            print("Current time:", now_with_seconds)
         if now == alarm_time and current_state == IDLE:
             current_state = ALARM
         time.sleep(1)
