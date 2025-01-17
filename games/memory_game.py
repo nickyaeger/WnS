@@ -16,6 +16,8 @@ GPIO.setup(13, GPIO.OUT) # down LED
 import random, time
 # import keyboard # for testing
 
+import sounds
+
 def generate_sequence(length=5):
     directions = ["up", "down", "left", "right"]
     return [random.choice(directions) for _ in range(length)]
@@ -55,6 +57,7 @@ def read_button_press():
 
 def start_game():
     print("Starting Memory Game...")
+    sounds.playMemory()
     while True:
         sequence = generate_sequence()
         GPIO.output(3, GPIO.LOW)

@@ -3,9 +3,11 @@
 from picamera2 import Picamera2
 import cv2
 import mediapipe as mp
+import sounds
 
 def start_game():
     print("Starting Jumping Jack Game...")
+    sounds.playJacks()
     picam2 = Picamera2()
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()

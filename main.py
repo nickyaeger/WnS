@@ -5,6 +5,7 @@ from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake
 from display_7_seg import display_text
 from buttons import Buttons
 import settings
+import sounds
 
 # Define states
 IDLE = "idle"
@@ -148,6 +149,7 @@ def main_loop():
     print("The current time is:", current_time.strftime("%H:%M"))
     print("The current alarm is set to:", alarm_time)
     print("The selected game is:", selected_game)
+    sounds.playMenu()
     while True:
         if current_state == IDLE:
             # Display current time

@@ -4,6 +4,7 @@ from picamera2 import Picamera2
 import cv2
 import mediapipe as mp
 import numpy as np
+import sounds
 
 def start_game():
     print("Starting Pushup Game...")
