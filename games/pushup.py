@@ -2,11 +2,11 @@ from picamera2 import Picamera2
 import cv2
 import mediapipe as mp
 
-picam2 = Picamera2()
 game_active = False
 
 def start_game():
     print("Starting Pushup Game...")
+    picam2 = Picamera2()
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()
     mp_drawing = mp.solutions.drawing_utils
@@ -22,7 +22,9 @@ def start_game():
     while True:
         # Break the loop on 'q' key press or 5 pushups
         if cv2.waitKey(1) & 0xFF == ord('q') or pushup_count >= 5:
-            stop_game()
+            print("Stopping Pushup Game...")
+            picam2.stop()
+            cv2.destroyAllWindows()
 
         frame = picam2.capture_array()
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
@@ -67,8 +69,4 @@ def start_game():
         cv2.putText(frame, f"Push-ups: {pushup_count}", (10, 50),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
         cv2.imshow("Push-up Detection", frame)
-
-def stop_game():
-    print("Stopping Pushup Game...")
-    picam2.stop()
-    cv2.destroyAllWindows()
+    
