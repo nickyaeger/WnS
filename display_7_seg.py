@@ -11,7 +11,7 @@ def display_text(
     if len(text) != 4:
         raise ValueError("Text must be 4 characters long")
 
-    print(f"Input Text: {text}")
+    # print(f"Input Text: {text}")
     # print(f"Colon State: {colon} (0: Off, 1: On, 2: Unchanged)")
     # print(f"LED States: {leds} (0: Off, 1: On, 2: Unchanged)")
     # print(f"Character Colors: {colors}")
@@ -50,7 +50,7 @@ def display_text(
             # print(f"LED {i + 1}: Unchanged")
             pass
 
-    print("Simulated LED strip update complete.")
+    # print("Simulated LED strip update complete.")
 
 # Example usage
 display_text("TEST", colon=1, leds=[1, 0, 2, 1], colors=[(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)])
