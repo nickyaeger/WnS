@@ -38,22 +38,15 @@ def start_game():
     
         if results.pose_landmarks:
             landmarks = results.pose_landmarks.landmark
-    
-            nose = landmarks[mp_pose.PoseLandmark.NOSE]
+            # Get relevant landmark positions
+            nose_y = landmarks[mp_pose.PoseLandmark.NOSE].y
             shoulders_y = (landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER].y +
                            landmarks[mp_pose.PoseLandmark.RIGHT_SHOULDER].y) / 2
-            hips_y = (landmarks[mp_pose.PoseLandmark.LEFT_HIP].y +
-                      landmarks[mp_pose.PoseLandmark.RIGHT_HIP].y) / 2
-    
-            # Push-up "down" condition: nose is close to shoulders' Y level
-            # and hips are significantly higher than shoulders (body alignment)
-            is_down = nose.y < shoulders_y and hips_y > shoulders_y + 0.1
-    
-            # Push-up "up" condition: nose is far above shoulders' Y level
-            # and body alignment is maintained
-            is_up = nose.y > shoulders_y + 0.2 and hips_y > shoulders_y
-    
-            # Determine state transition
+            # Push-up "down" condition: nose close to shoulder level
+            is_down = nose_y > shoulders_y + 0.05  # Adjust threshold as needed
+            # Push-up "up" condition: nose far above shoulder level
+            is_up = nose_y < shoulders_y - 0.05  # Adjust threshold as needed
+            # State transition for counting push-ups
             if prev_state is not None and prev_state != (is_up, is_down):
                 if is_down and not is_up:  # Transition to "down"
                     prev_state = (is_up, is_down)
@@ -63,7 +56,7 @@ def start_game():
                     prev_state = (is_up, is_down)
             else:
                 prev_state = (is_up, is_down)
-    
+
             mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
     
         cv2.putText(frame, f"Push-ups: {pushup_count}", (10, 50),
