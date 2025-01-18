@@ -5,7 +5,10 @@ import cv2
 import mediapipe as mp
 import sounds
 
+picam2 = None  # Declare camera globally to reuse across function calls
+
 def start_game():
+    global picam2
     print("Starting Jumping Jack Game...")
     sounds.playJacks()
     picam2 = Picamera2()
@@ -25,6 +28,7 @@ def start_game():
             # Exit game on 'q' key press or 10 jumping jacks
             if cv2.waitKey(1) & 0xFF == ord('q') or jumping_jack_count >= 5:
                 print("Stopping Jumping Jack Game...")
+                stop_game()
                 return
             
             frame = picam2.capture_array()
