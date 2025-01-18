@@ -3,15 +3,15 @@ import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 GPIO.setwarnings(False) # Ignore warning for now
 GPIO.setmode(GPIO.BOARD) # Use physical pin numbering
 
-GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # left press
-GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # up press
-GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # right press
-GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # down press
+GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # left press
+GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # up press
+GPIO.setup(32, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # right press
+GPIO.setup(36, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # down press
 
-GPIO.setup(3, GPIO.OUT) # left LED
-GPIO.setup(5, GPIO.OUT) # up LED
-GPIO.setup(11, GPIO.OUT) # right LED
-GPIO.setup(13, GPIO.OUT) # down LED
+GPIO.setup(21, GPIO.OUT) # left LED
+GPIO.setup(23, GPIO.OUT) # up LED
+GPIO.setup(31, GPIO.OUT) # right LED
+GPIO.setup(35, GPIO.OUT) # down LED
 
 import random, time
 # import keyboard # for testing
@@ -24,31 +24,31 @@ def generate_sequence(length=10):
 
 def direction_to_pin(direction):
     if direction == "left":
-        return 3
+        return 21
     elif direction == "up":
-        return 5
+        return 23
     elif direction == "right":
-        return 11
+        return 31
     elif direction == "down":
-        return 13
+        return 35
     else:
         print("Invalid direction")
         return None
     
 def read_button_press():
-    if GPIO.input(18):
+    if GPIO.input(22):
     # if keyboard.is_pressed('a'):
         # print("Left button pressed")
         return "left"
-    elif GPIO.input(22):
+    elif GPIO.input(24):
     # elif keyboard.is_pressed('w'):
         # print("Up button pressed")
         return "up"
-    elif GPIO.input(24):
+    elif GPIO.input(32):
     # elif keyboard.is_pressed('d'):
         # print("Right button pressed")
         return "right"
-    elif GPIO.input(26):
+    elif GPIO.input(36):
     # elif keyboard.is_pressed('s'):
         # print("Down button pressed")
         return "down"
@@ -60,10 +60,10 @@ def start_game(time_limit=1):
     sounds.playWhackamole()
     while True:
         sequence = generate_sequence()
-        GPIO.output(3, GPIO.LOW)
-        GPIO.output(5, GPIO.LOW)
-        GPIO.output(11, GPIO.LOW)
-        GPIO.output(13, GPIO.LOW)
+        GPIO.output(21, GPIO.LOW)
+        GPIO.output(23, GPIO.LOW)
+        GPIO.output(31, GPIO.LOW)
+        GPIO.output(35, GPIO.LOW)
         for direction in sequence:
             print(direction)
             pin = direction_to_pin(direction)
