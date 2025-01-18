@@ -1,5 +1,5 @@
 """Contains the functions that are used to edit the time, alarm, and game settings."""
-from display_7_seg import display_text
+from display_21_seg import display_digits
 
 time = 0
 alarm = 0
@@ -46,7 +46,7 @@ def edit_game_left():
         index = len(games) - 1
     else:
         index -= 1
-    display_text(games[index][0])
+    display_digits("000" + str(index))
     print("Selected game: ", games[index][1])
     return games[index][1]
 
@@ -56,7 +56,7 @@ def edit_game_right():
         index = 0
     else:
         index += 1
-    display_text(games[index][0])
+    display_digits("000" + str(index))
     print("Selected game: ", games[index][1])
     return games[index][1]
 
