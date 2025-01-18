@@ -29,8 +29,7 @@ def start_game():
             # Break the loop on 'q' key press or 10 pushups
             if cv2.waitKey(1) & 0xFF == ord('q') or pushup_count >= 5:
                 print("Stopping Pushup Game...")
-                stop_game()
-                return
+                break
 
             frame = picam2.capture_array()
 
@@ -100,14 +99,9 @@ def start_game():
             cv2.imshow("Push-up Detection", frame)
 
     finally:
-        stop_game()
         release_camera()
-
-def stop_game():
-    """Stop and release the camera properly."""
-    release_camera()
-    cv2.destroyAllWindows()
-    print("Camera and resources released.")
+        cv2.destroyAllWindows()
+    return
 
 def calculate_angle(landmarks, p1, p2, p3):
     x1, y1 = landmarks[p1].x, landmarks[p1].y

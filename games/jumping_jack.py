@@ -27,8 +27,7 @@ def start_game():
             # Exit game on 'q' key press or 10 jumping jacks
             if cv2.waitKey(1) & 0xFF == ord('q') or jumping_jack_count >= 5:
                 print("Stopping Jumping Jack Game...")
-                stop_game()
-                return
+                break
 
             frame = picam2.capture_array()
             frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
@@ -76,12 +75,6 @@ def start_game():
             cv2.imshow("Jumping Jack Detection", frame)
     finally:
         # Ensure the camera is properly released
-        stop_game()
         release_camera()
-
-
-def stop_game():
-    """Stop and release the camera properly."""
-    release_camera()
-    cv2.destroyAllWindows()
-    print("Camera and resources released.")
+        cv2.destroyAllWindows()
+    return
