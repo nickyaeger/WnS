@@ -5,7 +5,7 @@ from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake
 from display_7_seg import display_digits
 from buttons import Buttons
 import settings
-import sounds
+from games import sounds
 from camera import CameraManager
 
 # Define states
