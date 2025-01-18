@@ -10,10 +10,8 @@ bus = SMBus(1)
 def clear_display():
     """Clear the display and reset its state."""
     try:
-        # Send the "clear display" command
-        bus.write_byte(DISPLAY_I2C_ADDRESS, 0x76)
-        # Short delay to allow the display to process the clear command
-        time.sleep(0.1)
+        bus.write_byte(DISPLAY_I2C_ADDRESS, 0x76)  # Clear display command
+        time.sleep(0.1)  # Short delay to allow the display to process
     except Exception as e:
         print(f"An error occurred while clearing the display: {e}")
 
@@ -29,14 +27,11 @@ def display_digits(digits):
         return
 
     try:
-        # Convert the digits into their ASCII values
-        ascii_digits = [ord(d) for d in digits]
-
-        # Clear the display before updating
-        clear_display()
-
-        # Send all 4 digits in a single I2C transaction
-        bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, ascii_digits)
+        # Explicitly write each digit to its correct position
+        for position, digit in enumerate(digits):
+            ascii_value = ord(digit)  # Convert digit to ASCII
+            bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0x7B, [position, ascii_value])
+            time.sleep(0.01)  # Small delay between digit updates
 
         print(f"Displayed: {digits}")
     except Exception as e:
