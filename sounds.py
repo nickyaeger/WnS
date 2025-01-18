@@ -1,43 +1,29 @@
 import time
-import RPi.GPIO as GPIO
-GPIO.setmode(GPIO.BOARD)
+
+import pygame
+pygame.init()
 
 def playWhackamole():
-    trigger_pin = 23
-    GPIO.setup(trigger_pin, GPIO.OUT, initial=GPIO.HIGH)  # Set initial state to HIGH
-    GPIO.output(trigger_pin, GPIO.LOW)  # Trigger active low
-    time.sleep(0.1)  # Trigger for 100ms
-    GPIO.output(trigger_pin, GPIO.HIGH)  # Reset to inactive
-    GPIO.cleanup(trigger_pin)  # Clean up after use
+    whackamole = pygame.mixer.Sound('/home/wns/WnS/audio/whackamole.wav')
+    whackamole.play()
+    time.sleep(whackamole.get_length())
 
 def playMemory():
-    trigger_pin = 27
-    GPIO.setup(trigger_pin, GPIO.OUT, initial=GPIO.HIGH)
-    GPIO.output(trigger_pin, GPIO.LOW)
-    time.sleep(0.1)
-    GPIO.output(trigger_pin, GPIO.HIGH)
-    GPIO.cleanup(trigger_pin)
+    memory = pygame.mixer.Sound('/home/wns/WnS/audio/memory.wav')
+    memory.play()
+    time.sleep(memory.get_length())
 
 def playShake():
-    trigger_pin = 21
-    GPIO.setup(trigger_pin, GPIO.OUT, initial=GPIO.HIGH)
-    GPIO.output(trigger_pin, GPIO.LOW)
-    time.sleep(0.1)
-    GPIO.output(trigger_pin, GPIO.HIGH)
-    GPIO.cleanup(trigger_pin)
+    shake = pygame.mixer.Sound('/home/wns/WnS/audio/shake.wav')
+    shake.play()
+    time.sleep(shake.get_length())
 
-def playJacks():
-    trigger_pin = 19
-    GPIO.setup(trigger_pin, GPIO.OUT, initial=GPIO.HIGH)
-    GPIO.output(trigger_pin, GPIO.LOW)
-    time.sleep(0.1)
-    GPIO.output(trigger_pin, GPIO.HIGH)
-    GPIO.cleanup(trigger_pin)
+def playJump():
+    jump = pygame.mixer.Sound('/home/wns/WnS/audio/jump.wav')
+    jump.play()
+    time.sleep(jump.get_length())
 
 def playMenu():
-    trigger_pin = 15
-    GPIO.setup(trigger_pin, GPIO.OUT, initial=GPIO.HIGH)
-    GPIO.output(trigger_pin, GPIO.LOW)
-    time.sleep(0.1)
-    GPIO.output(trigger_pin, GPIO.HIGH)
-    GPIO.cleanup(trigger_pin)
+    menu = pygame.mixer.Sound('/home/wns/WnS/audio/menu.wav')
+    menu.play()
+    time.sleep(menu.get_length())
