@@ -34,7 +34,7 @@ def display_digits(digits):
         for position, digit in enumerate(digits):
             ascii_value = ord(digit)  # Convert digit to ASCII
             bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0x7B, [position, ascii_value])
-            time.sleep(0.01)  # Small delay between digit updates
+            time.sleep(0.1)  # Small delay between digit updates
 
         print(f"Displayed: {digits}")
     except Exception as e:
