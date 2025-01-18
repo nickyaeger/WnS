@@ -34,19 +34,30 @@ class Buttons:
             GPIO.setup(pin, GPIO.OUT)
             GPIO.output(pin, GPIO.LOW)
 
+        # Track button states (True = pressed, False = released)
+        self.button_states = {name: False for name in self.button_pins}
+
     def get_pressed_button(self):
         """Check if any button is pressed and return its name."""
         for name, pin in self.button_pins.items():
-            if GPIO.input(pin) == GPIO.HIGH:
+            is_pressed = GPIO.input(pin) == GPIO.HIGH
+
+            # Detect edge: Button pressed now but was not pressed before
+            if is_pressed and not self.button_states[name]:
+                self.button_states[name] = True  # Update state to pressed
                 return name
+
+            # Update state to released if button is not pressed
+            if not is_pressed:
+                self.button_states[name] = False
+
         return None
 
     def light_up_led(self, button_name):
         """Light up the LED corresponding to the button."""
         if button_name in self.led_pins:
             GPIO.output(self.led_pins[button_name], GPIO.HIGH)
-            while button_name in self.led_pins:
-                continue
+            time.sleep(0.2)
             GPIO.output(self.led_pins[button_name], GPIO.LOW)
 
     def cleanup(self):
@@ -64,8 +75,7 @@ if __name__ == "__main__":
             if button:
                 print(f"{button} button pressed")
                 buttons.light_up_led(button)
-            while buttons.get_pressed_button():
-                continue
+            time.sleep(0.1)
     except KeyboardInterrupt:
         print("Exiting program...")
     finally:
