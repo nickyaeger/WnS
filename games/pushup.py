@@ -26,7 +26,7 @@ def start_game():
             print("Stopping Pushup Game...")
             picam2.stop()
             cv2.destroyAllWindows()
-            exit()
+            return
 
         frame = picam2.capture_array()
 

@@ -26,7 +26,7 @@ def start_game():
             print("Stopping Jumping Jack Game...")
             picam2.stop()
             cv2.destroyAllWindows()
-            exit()
+            return
         
         frame = picam2.capture_array()
         frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)

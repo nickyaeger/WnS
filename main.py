@@ -114,12 +114,15 @@ def handle_button_input():
             pass
         elif current_state == ALARM_SET_HOUR or current_state == ALARM_SET_MINUTE:
             alarm_time = str(settings.alarm)  # Confirm the current setting
+            print("Alarm set to:", alarm_time)
             current_state = IDLE
         elif current_state == GAME_SET:
             selected_game = settings.games[settings.index][1]  # Confirm the current setting
+            print("Confirmed game:", selected_game)
             current_state = IDLE
         elif current_state == TIME_SET_HOUR or current_state == TIME_SET_MINUTE:
             current_time = datetime.strptime(str(settings.time), "%H%M")  # Confirm the current setting
+            print("Time set to:", current_time.strftime("%H:%M"))
             current_state = IDLE
     elif button == "demo":  # Start demo
         print("Demo button pressed...")
@@ -171,6 +174,7 @@ def main_loop():
             pass
         elif current_state == ALARM:
             # Trigger alarm
+            print("Alarm triggered!")
             for i in range(3):
                 display_text("WAKE")
                 time.sleep(0.4)
