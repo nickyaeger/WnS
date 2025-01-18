@@ -33,17 +33,25 @@ def kill_camera_process_by_node(device):
     try:
         output = subprocess.check_output(["lsof", device], text=True)
         lines = output.splitlines()
+
         for line in lines[1:]:  # Skip the header line
             parts = line.split()
-            pid = int(parts[1])  # PID is the second column
-            node = parts[-1]     # NODE is the last column
+
+            # Extract PID and NODE (fields vary slightly depending on the system)
+            pid = int(parts[1])  # PID is always the second column
+            node = parts[-4]     # NODE is typically 4th to last column
+
             print(f"Found process {pid} holding {device} (NODE: {node})")
 
-            # Ensure we don't kill the current script
+            # Ensure we don't kill the current script's process
             if pid != os.getpid():
-                print(f"Killing process {pid} holding {device}...")
+                print(f"Killing process {pid} holding {device} (NODE: {node})...")
                 os.system(f"sudo kill {pid}")
+                print(f"Process {pid} terminated.")
+            else:
+                print(f"Skipping the current script's process (PID: {os.getpid()}).")
     except subprocess.CalledProcessError:
         print(f"No processes are holding {device}.")
     except Exception as e:
         print(f"Error checking or killing processes: {e}")
+
