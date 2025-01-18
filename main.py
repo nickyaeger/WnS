@@ -1,11 +1,11 @@
 import time
 import threading
 from datetime import datetime, timedelta
+from games import sounds
 from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake, pushup
 from display_7_seg import display_digits
 from buttons import Buttons
 import settings
-from games import sounds
 from camera import CameraManager
 
 # Define states
