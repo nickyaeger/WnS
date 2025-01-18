@@ -1,57 +1,90 @@
-#Valid characters
-characters = ['_',' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/']
+from smbus2 import SMBus
+import time
 
-def display_text(
-    text: str,
-    colon: int = 0,
-    leds: list = [0, 0, 0, 0],
-    colors: list = [(255, 255, 255), (255, 255, 255), (255, 255, 255), (255, 255, 255)]
-) -> None:
-    """Simulates displaying the given text on the LED strip by printing inputs and expected operations."""
-    """if len(text) != 4:
-        raise ValueError("Text must be 4 characters long")
+# I2C address of the display (default is 0x71, can be changed via jumpers)
+DISPLAY_I2C_ADDRESS = 0x71
 
-    # print(f"Input Text: {text}")
-    # print(f"Colon State: {colon} (0: Off, 1: On, 2: Unchanged)")
-    # print(f"LED States: {leds} (0: Off, 1: On, 2: Unchanged)")
-    # print(f"Character Colors: {colors}")
-    
-    chars = list(text)
-    for i in range(4):
-        if chars[i] not in characters:
-            raise ValueError(f"Invalid character: {chars[i]}")
-        if chars[i] == '_':
-            # print(f"Character {i + 1}: Unchanged")
-            continue
-        if chars[i] == ' ':
-            # print(f"Character {i + 1}: Turned off")
-            continue
+# Initialize the I2C bus
+bus = SMBus(1)  # Use I2C bus 1 (default on most Raspberry Pi models)
 
-        # print(f"Character {i + 1}: {chars[i]}, Color: {colors[i]}")
+def send_command(command):
+    """Send a single-byte command to the display."""
+    bus.write_byte(DISPLAY_I2C_ADDRESS, command)
 
-    if colon == 0:
-        # print("Colon: Turned off")
-        pass
-    elif colon == 1:
-        # print("Colon: Turned on")
-        pass
-    elif colon == 2:
-        # print("Colon: Unchanged")
-        pass
+def send_data(data):
+    """Send a string or data to the display."""
+    if isinstance(data, str):
+        bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, list(data.encode()))
+    elif isinstance(data, list):
+        bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, data)
+    else:
+        bus.write_byte(DISPLAY_I2C_ADDRESS, data)
 
-    for i, led in enumerate(leds):
-        if led == 0:
-            # print(f"LED {i + 1}: Turned off")
-            pass
-        elif led == 1:
-            # print(f"LED {i + 1}: Turned on")
-            pass
-        elif led == 2:
-            # print(f"LED {i + 1}: Unchanged")
-            pass
+def clear_display():
+    """Clear the display."""
+    send_command(0x76)  # Clear display command
 
-    # print("Simulated LED strip update complete.")"""
-    pass
+def set_brightness(brightness):
+    """Set the brightness of the display (0-255)."""
+    if 0 <= brightness <= 255:
+        send_command(0x7A)  # Brightness command
+        send_data([brightness])
+    else:
+        print("Brightness value out of range. Must be between 0 and 255.")
 
-# Example usage
-display_text("TEST", colon=1, leds=[1, 0, 2, 1], colors=[(255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0)])
+def print_number(number):
+    """Display a number on the display."""
+    send_data(str(number))  # Send number as a string
+
+def print_message(message):
+    """Display a custom message on the display."""
+    send_data(message)  # Send custom message
+
+def set_decimal_points(bitmask):
+    """
+    Set the decimal points on the display.
+    Each bit of the bitmask corresponds to a decimal point.
+    """
+    if 0 <= bitmask <= 0x0F:  # Ensure bitmask is within valid range
+        send_command(0x77)  # Set decimal points command
+        send_data([bitmask])
+    else:
+        print("Bitmask value out of range. Must be between 0 and 15.")
+
+def test_display():
+    """
+    Run a test sequence to demonstrate the display's functionality.
+    """
+    try:
+        print("Starting I2C test...")
+        clear_display()
+        time.sleep(1)
+
+        print("Setting brightness to 50%...")
+        set_brightness(128)
+        time.sleep(1)
+
+        print("Displaying number 1234...")
+        print_number(1234)
+        time.sleep(2)
+
+        print("Enabling decimal points...")
+        set_decimal_points(0b1010)  # Enable decimal points on digits 1 and 3
+        time.sleep(2)
+
+        print("Displaying message 'HiPi'...")
+        print_message("HiPi")
+        time.sleep(2)
+
+        print("Clearing display...")
+        clear_display()
+        print("Test complete.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        clear_display()
+        bus.close()
+
+# Main script entry point
+if __name__ == "__main__":
+    test_display()
