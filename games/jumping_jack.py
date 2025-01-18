@@ -3,12 +3,12 @@
 from camera import CameraManager
 import cv2
 import mediapipe as mp
-import sounds
+# import sounds
 from display_7_seg import display_digits
 
 def start_game():
     print("Starting Jumping Jack Game...")
-    sounds.playJacks()
+    # sounds.playJacks()
 
     picam2 = CameraManager.get_camera()
 
