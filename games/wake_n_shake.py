@@ -18,8 +18,6 @@ GPIO.setup(35, GPIO.OUT) # down LED
 
 import random, time
 
-import sounds
-
 import serial
 uart = serial.Serial("/dev/ttyS0", 115200)
 
@@ -58,7 +56,6 @@ def read_imu_direction(threshold=30):
 
 def start_game(time_limit=5):
     print("Starting Wake'n'Shake Game...")
-    sounds.playShake()
     while True:
         sequence = generate_sequence()
         GPIO.output(21, GPIO.LOW)
@@ -107,5 +104,3 @@ def stop_game():
         print("right")
     elif roll < -50:
         print("left")
-        
-        

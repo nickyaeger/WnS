@@ -16,8 +16,6 @@ GPIO.setup(35, GPIO.OUT) # down LED
 import random, time
 # import keyboard # for testing
 
-import sounds
-
 def generate_sequence(length=10):
     directions = ["up", "down", "left", "right"]
     return [random.choice(directions) for _ in range(length)]
@@ -57,7 +55,6 @@ def read_button_press():
 
 def start_game(time_limit=1):
     print("Starting Whackamole...")
-    sounds.playWhackamole()
     while True:
         sequence = generate_sequence()
         GPIO.output(21, GPIO.LOW)
