@@ -18,8 +18,8 @@ class Buttons:
 
         # LED pins
         self.led_pins = {
-            "left": 3,
-            "up": 5,
+            "left": 19,
+            "up": 21,
             "right": 11,
             "down": 13,
             "center": 31,
