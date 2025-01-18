@@ -31,6 +31,8 @@ def display_digits(digits):
         # corrected_digits += digits[1:5]
         # corrected_digits += digits[0]
         # print(f"Corrected: {corrected_digits}")
+        clear_display()  # Clear the display first
+        time.sleep(0.03)
         for position, digit in enumerate(digits):
             ascii_value = ord(digit)  # Convert digit to ASCII
             bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0x7B, [position, ascii_value])
