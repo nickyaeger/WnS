@@ -160,6 +160,7 @@ def main_loop():
             # Display current time
             with time_lock:
                 display_digits(current_time.strftime("%H%M"))
+                time.sleep(0.05)
         elif current_state == ALARM_SET_HOUR:
             # display_digits(str(settings.alarm)[0] + str(settings.alarm)[1] + "  ", colon=1, colors=[(255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)])
             pass
@@ -167,7 +168,7 @@ def main_loop():
             # display_digits("  " + str(settings.alarm)[2] + str(settings.alarm)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
             pass
         elif current_state == GAME_SET:
-            display_digits(settings.games[settings.index][0])
+            display_digits("000" + settings.index)
         elif current_state == TIME_SET_HOUR:
             # display_digits(str(settings.time)[0] + str(settings.time)[1] + "  ", colon=1, colors=[(0, 0, 255), (0, 0, 255), (0, 0, 0), (0, 0, 0)])
             pass
