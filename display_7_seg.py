@@ -28,6 +28,10 @@ def display_digits(digits):
         # Convert the digits into their ASCII values
         ascii_digits = [ord(d) for d in digits]
 
+        # Always send a full 4-digit block to overwrite all digits
+        while len(ascii_digits) < 4:
+            ascii_digits.append(32)  # Pad with spaces (ASCII 32) if needed
+
         # Send the ASCII values directly to the display
         bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, ascii_digits)
         print(f"Displayed: {digits}")
