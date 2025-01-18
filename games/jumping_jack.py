@@ -11,7 +11,13 @@ def start_game():
     global picam2
     print("Starting Jumping Jack Game...")
     sounds.playJacks()
-    picam2 = Picamera2()
+    
+    if not picam2:
+        picam2 = Picamera2()
+        config = picam2.create_preview_configuration(main={"size": (854, 480)})
+        picam2.configure(config)
+        picam2.start()
+
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()
     mp_drawing = mp.solutions.drawing_utils
