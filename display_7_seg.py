@@ -11,7 +11,7 @@ def clear_display():
     """Clear the display and reset its state."""
     try:
         bus.write_byte(DISPLAY_I2C_ADDRESS, 0x76)  # Clear display command
-        time.sleep(0.1)  # Short delay to allow the display to process
+        time.sleep(0.02)  # Short delay to allow the display to process
     except Exception as e:
         print(f"An error occurred while clearing the display: {e}")
 
