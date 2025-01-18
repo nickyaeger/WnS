@@ -63,7 +63,8 @@ if __name__ == "__main__":
             if button:
                 print(f"{button} button pressed")
                 buttons.light_up_led(button)
-            time.sleep(0.1)
+            while buttons.get_pressed_button():
+                continue
     except KeyboardInterrupt:
         print("Exiting program...")
     finally:
