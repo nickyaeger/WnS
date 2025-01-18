@@ -12,17 +12,17 @@ class Buttons:
             "up": 22,
             "right": 24,
             "down": 26,
-            "center": 36,
-            "demo": 37,
+            "center": 38,
+            "demo": 40,
         }
 
         # LED pins
         self.led_pins = {
-            "left": 19,
-            "up": 21,
-            "right": 11,
-            "down": 13,
-            "center": 31,
+            "left": 22,
+            "up": 24,
+            "right": 32,
+            "down": 36,
+            "center": 37,
         }
 
         # Set up buttons as inputs with pull-down resistors

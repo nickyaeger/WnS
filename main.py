@@ -2,7 +2,7 @@ import time
 import threading
 from datetime import datetime, timedelta
 from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake, pushup
-from display_7_seg import display_text
+from display_7_seg import display_digits
 from buttons import Buttons
 import settings
 import sounds
@@ -158,34 +158,34 @@ def main_loop():
         if current_state == IDLE:
             # Display current time
             with time_lock:
-                display_text(current_time.strftime("%H%M"))
+                display_digits(current_time.strftime("%H%M"))
         elif current_state == ALARM_SET_HOUR:
-            # display_text(str(settings.alarm)[0] + str(settings.alarm)[1] + "  ", colon=1, colors=[(255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)])
+            # display_digits(str(settings.alarm)[0] + str(settings.alarm)[1] + "  ", colon=1, colors=[(255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)])
             pass
         elif current_state == ALARM_SET_MINUTE:
-            # display_text("  " + str(settings.alarm)[2] + str(settings.alarm)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
+            # display_digits("  " + str(settings.alarm)[2] + str(settings.alarm)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
             pass
         elif current_state == GAME_SET:
-            display_text(settings.games[settings.index][0])
+            display_digits(settings.games[settings.index][0])
         elif current_state == TIME_SET_HOUR:
-            # display_text(str(settings.time)[0] + str(settings.time)[1] + "  ", colon=1, colors=[(0, 0, 255), (0, 0, 255), (0, 0, 0), (0, 0, 0)])
+            # display_digits(str(settings.time)[0] + str(settings.time)[1] + "  ", colon=1, colors=[(0, 0, 255), (0, 0, 255), (0, 0, 0), (0, 0, 0)])
             pass
         elif current_state == TIME_SET_MINUTE:
-            # display_text("  " + str(settings.time)[2] + str(settings.time)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (0, 0, 255), (0, 0, 255)])
+            # display_digits("  " + str(settings.time)[2] + str(settings.time)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (0, 0, 255), (0, 0, 255)])
             pass
         elif current_state == ALARM:
             # Trigger alarm
             print("Alarm triggered!")
             for i in range(3):
-                display_text("WAKE")
-                time.sleep(0.4)
-                display_text("AKE ")
-                time.sleep(0.4)
-                display_text("KE U")
-                time.sleep(0.4)
-                display_text("E UP")
+                # display_text("WAKE")
+                # time.sleep(0.4)
+                # display_text("AKE ")
+                # time.sleep(0.4)
+                # display_text("KE U")
+                # time.sleep(0.4)
+                # display_text("E UP")
                 time.sleep(2)
-            display_text("GAME")
+            # display_text("GAME")
             current_state = GAME
         elif current_state == GAME:
             # Run the selected game
@@ -193,24 +193,24 @@ def main_loop():
             current_state = POST_ALARM
         elif current_state == POST_ALARM:
             # Resume idle state after alarm/game
-            display_text("GOOD")
-            time.sleep(0.4)
-            display_text("OOD ")
-            time.sleep(0.4)
-            display_text("OD M")
-            time.sleep(0.4)
-            display_text("D MO")
-            time.sleep(0.4)
-            display_text(" MOR")
-            time.sleep(0.4)
-            display_text("MORN")
-            time.sleep(0.4)
-            display_text("ORNI")
-            time.sleep(0.4)
-            display_text("RNIN")
-            time.sleep(0.4)
-            display_text("NING")
-            display_text("    ")
+            # display_text("GOOD")
+            # time.sleep(0.4)
+            # display_text("OOD ")
+            # time.sleep(0.4)
+            # display_text("OD M")
+            # time.sleep(0.4)
+            # display_text("D MO")
+            # time.sleep(0.4)
+            # display_text(" MOR")
+            # time.sleep(0.4)
+            # display_text("MORN")
+            # time.sleep(0.4)
+            # display_text("ORNI")
+            # time.sleep(0.4)
+            # display_text("RNIN")
+            # time.sleep(0.4)
+            # display_text("NING")
+            # display_text("    ")
             time.sleep(3)  # Pause for a bit
             current_state = IDLE
 

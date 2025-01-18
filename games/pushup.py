@@ -5,6 +5,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import sounds
+from display_7_seg import display_digits
 
 def start_game():
     print("Starting Jumping Jack Game...")
@@ -23,7 +24,7 @@ def start_game():
     try:
         while True:
             # Break the loop on 'q' key press or 10 pushups
-            if cv2.waitKey(1) & 0xFF == ord('q') or pushup_count >= 5:
+            if cv2.waitKey(1) & 0xFF == ord('q') or pushup_count >= 10:
                 print("Stopping Pushup Game...")
                 break
 

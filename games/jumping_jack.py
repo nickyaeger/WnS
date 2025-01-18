@@ -4,6 +4,7 @@ from camera import CameraManager
 import cv2
 import mediapipe as mp
 import sounds
+from display_7_seg import display_digits
 
 def start_game():
     print("Starting Jumping Jack Game...")
@@ -21,7 +22,7 @@ def start_game():
     try:
         while True:
             # Exit game on 'q' key press or 10 jumping jacks
-            if cv2.waitKey(1) & 0xFF == ord('q') or jumping_jack_count >= 5:
+            if cv2.waitKey(1) & 0xFF == ord('q') or jumping_jack_count >= 10:
                 print("Stopping Jumping Jack Game...")
                 break
 
@@ -62,6 +63,7 @@ def start_game():
                     if current_state:
                         jumping_jack_count += 1
                         print(f"Jumping Jacks: {jumping_jack_count}")
+                        display_digits("000" + str(jumping_jack_count))
 
                 prev_state = current_state
                 mp_drawing.draw_landmarks(frame, results.pose_landmarks, mp_pose.POSE_CONNECTIONS)

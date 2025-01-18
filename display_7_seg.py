@@ -15,19 +15,6 @@ def clear_display():
     except Exception as e:
         print(f"An error occurred while clearing the display: {e}")
 
-def rearrange_digits(digits):
-    """
-    Rearrange the input string to account for the display's consistent shifting behavior.
-
-    Args:
-        digits (str): A 4-character string containing digits (0-9).
-
-    Returns:
-        str: Rearranged string to display correctly.
-    """
-    # Rotate the string by 1 position to the right
-    return digits[-1] + digits[:-1]
-
 def display_digits(digits):
     """
     Display a 4-character string of digits (0-9) on the 7-segment display.
@@ -40,15 +27,15 @@ def display_digits(digits):
         return
 
     try:
-        # Rearrange the digits to compensate for the display's shifting behavior
-        adjusted_digits = rearrange_digits(digits)
+        corrected_digits = ""
+        corrected_digits += digits[1:5]
+        corrected_digits += digits[0]
+        for position, digit in enumerate(corrected_digits):
+            ascii_value = ord(digit)  # Convert digit to ASCII
+            bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0x7B, [position, ascii_value])
+            time.sleep(0.01)  # Small delay between digit updates
 
-        # Convert the digits into their ASCII values
-        ascii_digits = [ord(d) for d in adjusted_digits]
-
-        # Send all 4 digits in a single I2C transaction
-        bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, ascii_digits)
-        print(f"Displayed: {digits} (adjusted to {adjusted_digits})")
+        print(f"Displayed: {digits}")
     except Exception as e:
         print(f"An error occurred: {e}")
 
