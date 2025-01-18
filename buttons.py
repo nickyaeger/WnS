@@ -13,7 +13,7 @@ class Buttons:
             "right": 24,
             "down": 26,
             "center": 36,
-            #"demo": 26,
+            "demo": 37,
         }
 
         # LED pins
