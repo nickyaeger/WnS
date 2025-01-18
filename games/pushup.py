@@ -1,6 +1,6 @@
 "Pushup pose detection using OpenCV and MediaPipe Pose"
 
-from camera import get_camera, release_camera
+from camera import CameraManager
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -10,11 +10,7 @@ def start_game():
     print("Starting Jumping Jack Game...")
     sounds.playJacks()
 
-    picam2 = get_camera()
-
-    config = picam2.create_preview_configuration(main={"size": (854, 480)})
-    picam2.configure(config)
-    picam2.start()
+    picam2 = CameraManager.get_camera()
 
     mp_pose = mp.solutions.pose
     pose = mp_pose.Pose()
@@ -99,7 +95,6 @@ def start_game():
             cv2.imshow("Push-up Detection", frame)
 
     finally:
-        release_camera()
         cv2.destroyAllWindows()
     return
 

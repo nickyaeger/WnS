@@ -6,6 +6,7 @@ from display_7_seg import display_text
 from buttons import Buttons
 import settings
 import sounds
+from camera import CameraManager
 
 # Define states
 IDLE = "idle"
@@ -234,6 +235,7 @@ def run_game(game_name):
         pushup.start_game()
     else:
         print(f"Unknown game: {game_name}")
+    CameraManager.release_camera()
 
 
 # Getting button input using the Buttons class
