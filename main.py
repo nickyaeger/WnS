@@ -168,7 +168,7 @@ def main_loop():
             # display_digits("  " + str(settings.alarm)[2] + str(settings.alarm)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
             pass
         elif current_state == GAME_SET:
-            display_digits("000" + settings.index)
+            display_digits("000" + str(settings.index))
         elif current_state == TIME_SET_HOUR:
             # display_digits(str(settings.time)[0] + str(settings.time)[1] + "  ", colon=1, colors=[(0, 0, 255), (0, 0, 255), (0, 0, 0), (0, 0, 0)])
             pass
