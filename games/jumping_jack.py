@@ -5,26 +5,26 @@ import cv2
 import mediapipe as mp
 import sounds
 
-picam2 = None  # Declare camera globally to reuse across function calls
+picam2 = None  # Declare the camera globally
 
 def start_game():
     global picam2
     print("Starting Jumping Jack Game...")
     sounds.playJacks()
-    
-    if not picam2:
-        picam2 = Picamera2()
-        config = picam2.create_preview_configuration(main={"size": (854, 480)})
-        picam2.configure(config)
-        picam2.start()
 
-    mp_pose = mp.solutions.pose
-    pose = mp_pose.Pose()
-    mp_drawing = mp.solutions.drawing_utils
+    if picam2 is None:
+        picam2 = Picamera2()
+    else:
+        # Stop the camera if it's already running
+        picam2.stop()
 
     config = picam2.create_preview_configuration(main={"size": (854, 480)})
     picam2.configure(config)
     picam2.start()
+
+    mp_pose = mp.solutions.pose
+    pose = mp_pose.Pose()
+    mp_drawing = mp.solutions.drawing_utils
 
     jumping_jack_count = 0
     prev_state = None  # To track "up" or "down" state
@@ -36,7 +36,7 @@ def start_game():
                 print("Stopping Jumping Jack Game...")
                 stop_game()
                 return
-            
+
             frame = picam2.capture_array()
             frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
 
@@ -91,8 +91,5 @@ def stop_game():
     global picam2
     if picam2:
         picam2.stop()
-        picam2 = None
     cv2.destroyAllWindows()
     print("Camera and resources released.")
-
-    
