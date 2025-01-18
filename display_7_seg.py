@@ -27,10 +27,11 @@ def display_digits(digits):
         return
 
     try:
-        corrected_digits = ""
-        corrected_digits += digits[1:5]
-        corrected_digits += digits[0]
-        for position, digit in enumerate(corrected_digits):
+        # corrected_digits = ""
+        # corrected_digits += digits[1:5]
+        # corrected_digits += digits[0]
+        # print(f"Corrected: {corrected_digits}")
+        for position, digit in enumerate(digits):
             ascii_value = ord(digit)  # Convert digit to ASCII
             bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0x7B, [position, ascii_value])
             time.sleep(0.01)  # Small delay between digit updates
