@@ -1,22 +1,15 @@
 "Jumping jack pose detection using OpenCV and MediaPipe Pose"
 
-from picamera2 import Picamera2
+from camera import get_camera, release_camera
 import cv2
 import mediapipe as mp
 import sounds
 
-picam2 = None  # Declare the camera globally
-
 def start_game():
-    global picam2
     print("Starting Jumping Jack Game...")
     sounds.playJacks()
 
-    if picam2 is None:
-        picam2 = Picamera2()
-    else:
-        # Stop the camera if it's already running
-        picam2.stop()
+    picam2 = get_camera()
 
     config = picam2.create_preview_configuration(main={"size": (854, 480)})
     picam2.configure(config)
@@ -88,8 +81,6 @@ def start_game():
 
 def stop_game():
     """Stop and release the camera properly."""
-    global picam2
-    if picam2:
-        picam2.stop()
+    release_camera()
     cv2.destroyAllWindows()
     print("Camera and resources released.")
