@@ -8,7 +8,7 @@ from display_7_seg import display_digits
 
 def start_game():
     print("Starting Jumping Jack Game...")
-    sounds.playJacks()
+    sounds.playJump()
 
     picam2 = CameraManager.get_camera()
 
