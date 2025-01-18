@@ -45,7 +45,8 @@ class Buttons:
         """Light up the LED corresponding to the button."""
         if button_name in self.led_pins:
             GPIO.output(self.led_pins[button_name], GPIO.HIGH)
-            time.sleep(0.2)
+            while buttons.get_pressed_button():
+                continue
             GPIO.output(self.led_pins[button_name], GPIO.LOW)
 
     def cleanup(self):
