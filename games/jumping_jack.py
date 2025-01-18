@@ -77,6 +77,7 @@ def start_game():
     finally:
         # Ensure the camera is properly released
         stop_game()
+        release_camera()
 
 
 def stop_game():

@@ -101,6 +101,7 @@ def start_game():
 
     finally:
         stop_game()
+        release_camera()
 
 def stop_game():
     """Stop and release the camera properly."""
