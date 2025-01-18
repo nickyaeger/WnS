@@ -73,7 +73,16 @@ def start_game():
             cv2.imshow("Jumping Jack Detection", frame)
     finally:
         # Ensure the camera is properly released
+        stop_game()
+
+
+def stop_game():
+    """Stop and release the camera properly."""
+    global picam2
+    if picam2:
         picam2.stop()
-        cv2.destroyAllWindows()
+        picam2 = None
+    cv2.destroyAllWindows()
+    print("Camera and resources released.")
 
     
