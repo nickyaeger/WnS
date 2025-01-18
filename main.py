@@ -7,6 +7,7 @@ from display_7_seg import display_digits
 from buttons import Buttons
 import settings
 from camera import CameraManager
+import sounds
 
 # Define states
 IDLE = "idle"
@@ -222,14 +223,18 @@ def main_loop():
 # Run the selected game
 def run_game(game_name):
     if game_name == "jumping_jack":
+        sounds.playJump()
         jumping_jack.start_game()
     elif game_name == "memory_game":
+        sounds.playMemory()
         memory_game.start_game()
     elif game_name == "whackamole":
+        sounds.playWhackamole()
         whackamole.start_game()
     elif game_name == "math_game":
         math_game.start_game()
     elif game_name == "wake_n_shake":
+        sounds.playShake()
         wake_n_shake.start_game()
     elif game_name == "pushup":
         pushup.start_game()
