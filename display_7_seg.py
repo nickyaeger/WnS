@@ -61,7 +61,7 @@ def test_display():
         time.sleep(1)
 
         print("Setting brightness to 50%...")
-        set_brightness(128)
+        set_brightness(255)
         time.sleep(1)
 
         print("Displaying number 1234...")
