@@ -45,7 +45,7 @@ class Buttons:
         """Light up the LED corresponding to the button."""
         if button_name in self.led_pins:
             GPIO.output(self.led_pins[button_name], GPIO.HIGH)
-            while buttons.get_pressed_button():
+            while button_name in self.led_pins:
                 continue
             GPIO.output(self.led_pins[button_name], GPIO.LOW)
 
