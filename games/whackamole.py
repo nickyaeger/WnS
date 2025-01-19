@@ -53,7 +53,7 @@ def read_button_press():
     else:
         return None
 
-def start_game(time_limit=1):
+def start_game(time_limit=3):
     print("Starting Whackamole...")
     while True:
         sequence = generate_sequence()
