@@ -252,6 +252,7 @@ def main_loop():
             # display_text("    ")
             time.sleep(3)  # Pause for a bit
             current_state = IDLE
+            start_alarm = False
 
         # Check for button input in every loop iteration
         handle_button_input()
