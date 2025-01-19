@@ -8,8 +8,8 @@ import sounds
 from display import display_digits
 
 def start_game():
-    print("Starting Jumping Jack Game...")
-    sounds.playJacks()
+    print("Starting Pushup Game...")
+    # sounds.playPushup()
 
     picam2 = CameraManager.get_camera()
 
