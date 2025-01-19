@@ -214,7 +214,6 @@ def main_loop():
             # Trigger alarm
             print("Alarm triggered!")
             sounds.playWakeup()
-            start_alarm = True
             # for i in range(3):
                 # display_text("WAKE")
                 # time.sleep(0.4)
@@ -261,22 +260,29 @@ def main_loop():
 
 # Run the selected game
 def run_game(game_name):
+    global start_alarm
     if game_name == "jumping_jack":
         sounds.playJump()
+        start_alarm = True
         jumping_jack.start_game()
     elif game_name == "memory_game":
         sounds.playMemory()
+        start_alarm = True
         memory_game.start_game()
     elif game_name == "whackamole":
         sounds.playWhackamole()
+        start_alarm = True
         whackamole.start_game()
     elif game_name == "math_game":
         math_game.start_game()
+        start_alarm = True
     elif game_name == "wake_n_shake":
         sounds.playShake()
+        start_alarm = True
         wake_n_shake.start_game()
     elif game_name == "pushup":
         pushup.start_game()
+        start_alarm = True
     else:
         print(f"Unknown game: {game_name}")
     CameraManager.release_camera()
