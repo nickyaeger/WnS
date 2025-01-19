@@ -88,7 +88,7 @@ def start_game():
             print("Stopping Push-Up Game...")
             break
         img = picam2.capture_array()
-        frame = cv2.rotate(frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        img = cv2.rotate(img, cv2.ROTATE_90_COUNTERCLOCKWISE)
         img = detector.findPose(img, False)
         lmList = detector.findPosition(img, False)
 
