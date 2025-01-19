@@ -281,8 +281,8 @@ def run_game(game_name):
         start_alarm = True
         wake_n_shake.start_game()
     elif game_name == "pushup":
-        pushup.start_game()
         start_alarm = True
+        pushup.start_game()
     else:
         print(f"Unknown game: {game_name}")
     CameraManager.release_camera()
