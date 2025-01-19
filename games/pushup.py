@@ -71,6 +71,7 @@ class PoseDetector:
 
 def start_game():
     print("Starting Push-Up Game...")
+    display_digits("0000")
     # sounds.playPushup()
 
     picam2 = CameraManager.get_camera()
@@ -124,6 +125,10 @@ def start_game():
                             direction = 0
                             if count % 1 == 0:
                                 print(f"Push-Up Count: {int(count)}")
+                                if count < 10:
+                                    display_digits("000" + str(int(count)))
+                                else:
+                                    display_digits("00" + str(int(count)))
                     else:
                         feedback = "Fix Form"
             
