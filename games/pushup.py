@@ -72,7 +72,7 @@ class PoseDetector:
 def start_game():
     print("Starting Push-Up Game...")
     display_digits("0000")
-    # sounds.playPushup()
+    sounds.playPushup()
 
     picam2 = CameraManager.get_camera()
 

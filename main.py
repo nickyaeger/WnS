@@ -144,6 +144,8 @@ def check_alarm():
                 display_digits(current_time.strftime("%H%M"))
         if now == alarm_time and current_state == IDLE:
             current_state = ALARM
+        if current_state == ALARM or current_state == GAME:
+            sounds.playAlarm()
         time.sleep(1)
 
 
@@ -209,7 +211,8 @@ def main_loop():
         elif current_state == ALARM:
             # Trigger alarm
             print("Alarm triggered!")
-            for i in range(3):
+            sounds.playWakeup()
+            # for i in range(3):
                 # display_text("WAKE")
                 # time.sleep(0.4)
                 # display_text("AKE ")
@@ -217,7 +220,7 @@ def main_loop():
                 # display_text("KE U")
                 # time.sleep(0.4)
                 # display_text("E UP")
-                time.sleep(2)
+            # time.sleep(2)
             # display_text("GAME")
             current_state = GAME
         elif current_state == GAME:
