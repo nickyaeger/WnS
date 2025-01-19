@@ -28,6 +28,11 @@ def playMenu():
     menu.play()
     time.sleep(menu.get_length())
 
+def playWakeup():
+    wakeup = pygame.mixer.Sound('/home/wns/WnS/audio/wakeup.wav')
+    wakeup.play()
+    time.sleep(wakeup.get_length())
+
 def playAlarm():
     alarm = pygame.mixer.Sound('/home/wns/WnS/audio/repeat.wav')
     alarm.play()
