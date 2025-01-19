@@ -44,17 +44,17 @@ def direction_to_pin(direction):
 def read_imu_direction(threshold=30):
     yaw, pitch, roll, x_accel, y_accel, z_accel = rvc.heading
     if pitch < -threshold:
-        return "up"
-    elif pitch > threshold:
         return "down"
+    elif pitch > threshold:
+        return "up"
     elif roll < -threshold:
-        return "left"
-    elif roll > threshold:
         return "right"
+    elif roll > threshold:
+        return "left"
     else:
         return None
 
-def start_game(time_limit=5):
+def start_game(time_limit=3):
     print("Starting Wake'n'Shake Game...")
     while True:
         sequence = generate_sequence()
@@ -92,15 +92,15 @@ def stop_game():
     print("Stopping Wake'n'Shake Game...")
 
 # test code
-#while True:
-    yaw, pitch, roll, x_accel, y_accel, z_accel = rvc.heading
+# while True:
+#    yaw, pitch, roll, x_accel, y_accel, z_accel = rvc.heading
 #    print("Yaw: %2.2f Pitch: %2.2f Roll: %2.2f Degrees" % (yaw, pitch, roll))
 #    print("Acceleration X: %2.2f Y: %2.2f Z: %2.2f m/s^2" % (x_accel, y_accel, z_accel))
-    if pitch > 50:
-        print("down")
-    elif pitch < -50:
-        print("up")
-    elif roll > 50:
-        print("right")
-    elif roll < -50:
-        print("left")
+#    if pitch > 50:
+#        print("down")
+#    elif pitch < -50:
+#        print("up")
+#    elif roll > 50:
+#        print("right")
+#    elif roll < -50:
+#        print("left")
