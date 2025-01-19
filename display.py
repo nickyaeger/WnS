@@ -13,7 +13,7 @@ def clear_display():
         # Send the "clear display" command
         bus.write_byte(DISPLAY_I2C_ADDRESS, 0x76)
         # Short delay to allow the display to process the clear command
-        time.sleep(0.1)
+        time.sleep(0.03)
     except Exception as e:
         print(f"An error occurred while clearing the display: {e}")
 
@@ -24,6 +24,7 @@ def display_digits(digits):
     Args:
         digits (str): A 4-character string containing digits (0-9).
     """
+    clear_display()
     corrected_digits = ""
     corrected_digits += digits[1:5]
     corrected_digits += digits[0]
