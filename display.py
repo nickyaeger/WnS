@@ -34,10 +34,6 @@ def display_digits(digits):
     try:
         # Convert the digits into their ASCII values
         ascii_digits = [ord(d) for d in corrected_digits]
-
-        # Clear the display before updating
-        clear_display()
-
         # Send all 4 digits in a single I2C transaction
         bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, ascii_digits)
 
