@@ -27,3 +27,13 @@ def playMenu():
     menu = pygame.mixer.Sound('/home/wns/WnS/audio/menu.wav')
     menu.play()
     time.sleep(menu.get_length())
+
+def playAlarm():
+    alarm = pygame.mixer.Sound('/home/wns/WnS/audio/alarm.wav')
+    alarm.play()
+    time.sleep(alarm.get_length())
+
+def playPushup():
+    pushup = pygame.mixer.Sound('/home/wns/WnS/audio/pushup.wav')
+    pushup.play()
+    time.sleep(pushup.get_length())
