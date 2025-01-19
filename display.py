@@ -24,13 +24,16 @@ def display_digits(digits):
     Args:
         digits (str): A 4-character string containing digits (0-9).
     """
-    if len(digits) != 4 or not digits.isdigit():
+    corrected_digits = ""
+    corrected_digits += digits[1:5]
+    corrected_digits += digits[0]
+    if len(corrected_digits) != 4 or not corrected_digits.isdigit():
         print("Error: Input must be a 4-character string containing only digits (0-9).")
         return
 
     try:
         # Convert the digits into their ASCII values
-        ascii_digits = [ord(d) for d in digits]
+        ascii_digits = [ord(d) for d in corrected_digits]
 
         # Clear the display before updating
         clear_display()
@@ -38,7 +41,7 @@ def display_digits(digits):
         # Send all 4 digits in a single I2C transaction
         bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, ascii_digits)
 
-        print(f"Displayed: {digits}")
+        print(f"Displayed: {corrected_digits}")
     except Exception as e:
         print(f"An error occurred: {e}")
 
