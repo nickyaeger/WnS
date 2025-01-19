@@ -140,6 +140,8 @@ def check_alarm():
             now = current_time.strftime("%H%M")  # Use internal time
             now_with_seconds = current_time.strftime("%H:%M:%S")
             print("Current time:", now_with_seconds)
+            if current_state == IDLE:
+                display_digits(current_time.strftime("%H%M"))
         if now == alarm_time and current_state == IDLE:
             current_state = ALARM
         time.sleep(1)
@@ -158,9 +160,10 @@ def main_loop():
     while True:
         if current_state == IDLE:
             # Display current time
-            with time_lock:
-                display_digits(current_time.strftime("%H%M"))
-                time.sleep(0.05)
+            # with time_lock:
+                # display_digits(current_time.strftime("%H%M"))
+                # time.sleep(0.05)
+            pass
         elif current_state == ALARM_SET_HOUR:
             # display_digits(str(settings.alarm)[0] + str(settings.alarm)[1] + "  ", colon=1, colors=[(255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)])
             if settings.alarm < 10:

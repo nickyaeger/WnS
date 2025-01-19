@@ -37,7 +37,7 @@ def display_digits(digits):
         # Send all 4 digits in a single I2C transaction
         bus.write_i2c_block_data(DISPLAY_I2C_ADDRESS, 0, ascii_digits)
 
-        print(f"Displayed: {corrected_digits}")
+        print(f"Displayed: {digits}")
     except Exception as e:
         print(f"An error occurred: {e}")
 
