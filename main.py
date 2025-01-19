@@ -134,7 +134,7 @@ def handle_button_input():
 
 # Alarm checker (runs in a thread)
 def check_alarm():
-    global current_state
+    global current_state, start_alarm
 
     while True:
         with time_lock:
@@ -153,7 +153,7 @@ def check_alarm():
 
 # Main state machine loop
 def main_loop():
-    global current_state, selected_game
+    global current_state, selected_game, start_alarm
     print("Entering main loop...")
     print("Welcome to the Wake 'n' Shake Alarm Clock! Press Ctrl+C to exit.")
     print("The current state is:", current_state)
