@@ -27,6 +27,7 @@ selected_game = "jumping_jack"
 current_time = datetime.now()  # Internal time starts with the current system time
 time_lock = threading.Lock()  # To safely update the time across threads
 buttons = Buttons()
+start_alarm = False
 
 
 # Function to increment internal time
@@ -145,7 +146,8 @@ def check_alarm():
         if now == alarm_time and current_state == IDLE:
             current_state = ALARM
         if current_state == ALARM or current_state == GAME:
-            sounds.playAlarm()
+            if start_alarm:
+                sounds.playAlarm()
         time.sleep(1)
 
 
@@ -212,6 +214,7 @@ def main_loop():
             # Trigger alarm
             print("Alarm triggered!")
             sounds.playWakeup()
+            start_alarm = True
             # for i in range(3):
                 # display_text("WAKE")
                 # time.sleep(0.4)
