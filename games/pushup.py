@@ -5,7 +5,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import sounds
-from display_7_seg import display_digits
+from display import display_digits
 
 def start_game():
     print("Starting Jumping Jack Game...")

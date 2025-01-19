@@ -3,7 +3,7 @@ import threading
 from datetime import datetime, timedelta
 from games import sounds
 from games import jumping_jack, memory_game, whackamole, math_game, wake_n_shake, pushup
-from display_7_seg import display_digits
+from display import display_digits
 from buttons import Buttons
 import settings
 from camera import CameraManager
@@ -163,18 +163,46 @@ def main_loop():
                 time.sleep(0.05)
         elif current_state == ALARM_SET_HOUR:
             # display_digits(str(settings.alarm)[0] + str(settings.alarm)[1] + "  ", colon=1, colors=[(255, 0, 0), (255, 0, 0), (0, 0, 0), (0, 0, 0)])
-            pass
+            if settings.alarm < 10:
+                display_digits("000" + str(settings.alarm))
+            elif settings.alarm < 100:
+                display_digits("00" + str(settings.alarm))
+            elif settings.alarm < 1000:
+                display_digits("0"+ str(settings.alarm))
+            else:
+                display_digits(str(settings.alarm))
         elif current_state == ALARM_SET_MINUTE:
             # display_digits("  " + str(settings.alarm)[2] + str(settings.alarm)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (255, 0, 0), (255, 0, 0)])
-            pass
+            if settings.alarm < 10:
+                display_digits("000" + str(settings.alarm))
+            elif settings.alarm < 100:
+                display_digits("00" + str(settings.alarm))
+            elif settings.alarm < 1000:
+                display_digits("0"+ str(settings.alarm))
+            else:
+                display_digits(str(settings.alarm))
         elif current_state == GAME_SET:
             display_digits("000" + str(settings.index))
         elif current_state == TIME_SET_HOUR:
             # display_digits(str(settings.time)[0] + str(settings.time)[1] + "  ", colon=1, colors=[(0, 0, 255), (0, 0, 255), (0, 0, 0), (0, 0, 0)])
-            pass
+            if settings.time < 10:
+                display_digits("000" + str(settings.time))
+            elif settings.time < 100:
+                display_digits("00" + str(settings.time))
+            elif settings.time < 1000:
+                display_digits("0"+ str(settings.time))
+            else:
+                display_digits(str(settings.time))
         elif current_state == TIME_SET_MINUTE:
             # display_digits("  " + str(settings.time)[2] + str(settings.time)[3], colon=1, colors=[(0, 0, 0), (0, 0, 0), (0, 0, 255), (0, 0, 255)])
-            pass
+            if settings.time < 10:
+                display_digits("000" + str(settings.time))
+            elif settings.time < 100:
+                display_digits("00" + str(settings.time))
+            elif settings.time < 1000:
+                display_digits("0"+ str(settings.time))
+            else:
+                display_digits(str(settings.time))
         elif current_state == ALARM:
             # Trigger alarm
             print("Alarm triggered!")
